@@ -143,13 +143,13 @@ function encrypt(text, key, shift) {
 function decrypt(text, key, shift) {
     for (let i = 0; i < 2; i++) {
         for (let j = 0; j < 4; j++) {
-            text = encrypter.base64Encode(text);
+            text = encrypter.base64Decode(text);
             text = encrypter.reverse(text);
         }
         for (let j = 0; j < 3; j++) {
-            text = encrypter.encrypt(text, shift);
+            text = encrypter.decrypt(text, shift);
         }
-        text = encrypter.scramble(text, key);
+        text = encrypter.unscramble(text, key);
     }
     text = encrypter.reverse(text);
     return text;
