@@ -56,6 +56,7 @@ class CaesarCipher {
         return array;
     }
 
+    // Encrypt function with shift adjustment
     encrypt(text, key) {
         // If no key is provided, generate a random key
         if (!key) {
@@ -85,7 +86,7 @@ class CaesarCipher {
             }
             // Encrypt special characters
             else {
-                code = (code + this.shift);
+                code = (code + this.shift) % 256; // Adjust for ASCII range
             }
             encryptedText += String.fromCharCode(code);
         }
@@ -93,6 +94,7 @@ class CaesarCipher {
         return btoa(encryptedText);
     }
 
+    // Decrypt function with shift adjustment
     decrypt(text, key) {
         let decryptedText = atob(text);
 
@@ -116,7 +118,8 @@ class CaesarCipher {
             }
             // Decrypt special characters
             else {
-                code = (code - this.shift);
+                code = (code - this.shift) % 256; // Adjust for ASCII range
+                if (code < 0) code += 256; // Handle negative values
             }
             decryptedResult += String.fromCharCode(code);
         }
