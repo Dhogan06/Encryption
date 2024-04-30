@@ -158,14 +158,14 @@ function decrypt(text, key, shift) {
 // Example usage
 // let cipher = new DauigiEncryption();
 
-let plaintext = "abcdefghijklmnopqrstuvwxyz";
-let key = encrypter.generateKey();
+// let plaintext = "abcdefghijklmnopqrstuvwxyz";
+// let key = encrypter.generateKey();
 
-let encryptedText = encrypt(plaintext, key, 6);
-let decryptedText = decrypt(encryptedText, key, 6);
+// let encryptedText = encrypt(plaintext, key, 6);
+// let decryptedText = decrypt(encryptedText, key, 6);
 
-console.log(encryptedText);
-console.log(decryptedText);
+// console.log(encryptedText);
+// console.log(decryptedText);
 
 
 // let preparedKey = cipher.prepareKey(key);
