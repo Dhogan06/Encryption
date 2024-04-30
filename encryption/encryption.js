@@ -160,7 +160,7 @@ function decrypt(text, key, shift) {
 
 
 let plaintext = "abcdefghijklmnopqrstuvwxyz";
-let key = cipher.generateKey();
+let key = encrypter.generateKey();
 
 let encryptedText = encrypt(plaintext, key, 6);
 let decryptedText = decrypt(encryptedText, key, 6);
