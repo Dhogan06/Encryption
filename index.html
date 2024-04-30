@@ -6,6 +6,34 @@
     <title>Document</title>
 </head>
 <body>
+    <p id="value"></p>
+    <input type="text" id="key" placeholder="Key">
+    <input type="number" id="shift" placeholder="Shift">
+    <textarea id="text" cols="30" rows="10" placeholder="Text"></textarea>
+    <button id="encrypt">Encrypt</button>
+    <button id="decrypt">Decrypt</button>
+    <button id="gen_key">Generate Key</button>
     <script src="./encryption/encryption.js"></script>
+    <script>
+        let value = document.getElementById('value');
+        let key = document.getElementById('key');
+        let shift = document.getElementById('shift').value;
+        let text = document.getElementById('text').value;
+        let encryptBtn = document.getElementById('encrypt');
+        let decryptBtn = document.getElementById('decrypt');
+        let genKeyBtn = document.getElementById('gen_key');
+        
+        genKeyBtn.onclick = () => {
+            key.innerHTML = encrypter.generateKey();
+        }
+
+        encryptBtn.onclick = () => {
+            value.innerHTML = encrypt(text, key.value, shift);
+        }
+
+        decryptBtn.onclick = () => {
+            value.innerHTML = decrypt(text, key.value, shift);
+        }
+    </script>
 </body>
 </html>
