@@ -135,6 +135,7 @@ let key = cipher.generateKey();
 let encryptedText = cipher.encrypt(plaintext, key);
 let decryptedText = cipher.decrypt(encryptedText, key);
 
-console.log("Plaintext:", plaintext);
-console.log("Encrypted (Base64):", encryptedText);
-console.log("Decrypted:", decryptedText);
+console.log("Plaintext: ", plaintext);
+console.log("Key: ", key);
+console.log("Encrypted (Base64): ", encryptedText);
+console.log("Decrypted: ", decryptedText);
