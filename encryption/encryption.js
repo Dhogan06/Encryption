@@ -1,4 +1,4 @@
-class CaesarCipher {
+class DauigiEncryption {
     constructor() {
     }
 
@@ -123,24 +123,66 @@ class CaesarCipher {
     }
 }
 
+let encrypter = new DauigiEncryption();
+
+function encrypt(text, key, shift) {
+    text = encrypter.reverse(text);
+    for (let i = 0; i < 2; i++) {
+        text = encrypter.scramble(text, key);
+        for (let j = 0; j < 3; j++) {
+            text = encrypter.encrypt(text, shift);
+        }
+        for (let j = 0; j < 4; j++) {
+            text = encrypter.reverse(text);
+            text = encrypter.base64Encode(text);
+        }
+    }
+    return text;
+}
+
+function decrypt(text, key, shift) {
+    for (let i = 0; i < 2; i++) {
+        for (let j = 0; j < 4; j++) {
+            text = encrypter.base64Encode(text);
+            text = encrypter.reverse(text);
+        }
+        for (let j = 0; j < 3; j++) {
+            text = encrypter.encrypt(text, shift);
+        }
+        text = encrypter.scramble(text, key);
+    }
+    text = encrypter.reverse(text);
+    return text;
+}
+
 // Example usage
-let cipher = new CaesarCipher();
+// let cipher = new DauigiEncryption();
+
+
 let plaintext = "abcdefghijklmnopqrstuvwxyz";
 let key = cipher.generateKey();
-let preparedKey = cipher.prepareKey(key);
-let scrambledText = cipher.scramble(plaintext, key);
-let unscrambledText = cipher.unscramble(scrambledText, key);
-let encryptedText = cipher.encrypt(plaintext, 5);
-let decryptedText = cipher.decrypt(encryptedText, 5);
-let reversedText = cipher.reverse(plaintext);
-let unreversedText = cipher.reverse(reversedText);
 
-console.log("Plain Text:", plaintext);
-console.log("Key:", key);
-console.log("Prepared Key:", preparedKey);
-console.log("Scrambled:", scrambledText);
-console.log("Unscrambled:", unscrambledText);
-console.log("Encrypted:", encryptedText);
-console.log("Decrypted:", decryptedText);
-console.log("Reversed:", reversedText);
-console.log("Unreversed:", unreversedText);
+let encryptedText = encrypt(plaintext, key, 6);
+let decryptedText = decrypt(encryptedText, key, 6);
+
+console.log(encryptedText);
+console.log(decryptedText);
+
+
+// let preparedKey = cipher.prepareKey(key);
+// let scrambledText = cipher.scramble(plaintext, key);
+// let unscrambledText = cipher.unscramble(scrambledText, key);
+// let encryptedText = cipher.encrypt(plaintext, 5);
+// let decryptedText = cipher.decrypt(encryptedText, 5);
+// let reversedText = cipher.reverse(plaintext);
+// let unreversedText = cipher.reverse(reversedText);
+
+// console.log("Plain Text:", plaintext);
+// console.log("Key:", key);
+// console.log("Prepared Key:", preparedKey);
+// console.log("Scrambled:", scrambledText);
+// console.log("Unscrambled:", unscrambledText);
+// console.log("Encrypted:", encryptedText);
+// console.log("Decrypted:", decryptedText);
+// console.log("Reversed:", reversedText);
+// console.log("Unreversed:", unreversedText);
