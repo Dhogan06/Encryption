@@ -81,6 +81,7 @@ class DauigiEncryption {
     }
 
     encrypt(text, shift) {
+        shift = parseInt(shift);
         // Apply Caesar Cipher on the scrambled text
         let encryptedText = "";
         for (let i = 0; i < text.length; i++) {
@@ -102,6 +103,7 @@ class DauigiEncryption {
     }
 
     decrypt(text, shift) {
+        shift = parseInt(shift);
         // Decrypt Caesar Cipher
         let decryptedResult = "";
         for (let i = 0; i < text.length; i++) {
