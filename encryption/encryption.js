@@ -132,8 +132,9 @@ class CaesarCipher {
 let cipher = new CaesarCipher(3);
 let plaintext = "Hello, World! @#$%^&*()";
 let key = cipher.generateKey();
+let key2 = cipher.generateKey();
 let encryptedText = cipher.encrypt(plaintext, key);
-let decryptedText = cipher.decrypt(encryptedText, key);
+let decryptedText = cipher.decrypt(encryptedText, key2);
 
 console.log("Plaintext: ", plaintext);
 console.log("Key: ", key);
