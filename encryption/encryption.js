@@ -54,7 +54,7 @@ class CaesarCipher {
     // Function to generate a random key
     generateKey() {
         const key = [...Array(26).keys()];
-        return String.fromCharCode(this.shuffle(key));
+        return String.fromCharCode(...this.shuffle(key));
     }
 
     // Helper function to shuffle an array using Fisher-Yates algorithm
@@ -133,6 +133,8 @@ let scrambledText = cipher.scramble(plaintext, key);
 let unscrambledText = cipher.unscramble(scrambledText, key);
 let encryptedText = cipher.encrypt(plaintext);
 let decryptedText = cipher.decrypt(encryptedText);
+let reversedText = cipher.reverse(plaintext);
+let unreversedText = cipher.reverse(reversedText);
 
 console.log("Plain Text:", plaintext);
 console.log("Key:", key);
@@ -141,3 +143,5 @@ console.log("Scrambled:", scrambledText);
 console.log("Unscrambled:", unscrambledText);
 console.log("Encrypted:", encryptedText);
 console.log("Decrypted:", decryptedText);
+console.log("Reversed:", reversedText);
+console.log("Unreversed:", unreversedText);
