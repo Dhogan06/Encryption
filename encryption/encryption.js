@@ -56,20 +56,27 @@ class CaesarCipher {
         return array;
     }
 
-    encrypt(text, key) {
-        // If no key is provided, generate a random key
-        if (!key) {
-            key = this.generateKey();
-        }
+    // Function to reverse the text
+    reverse(text) {
+        return text.split('').reverse().join('');
+    }
 
-        // Scramble the text
-        const scrambledText = this.scramble(text, key);
+    // Function to encode text to base64
+    base64Encode(text) {
+        return btoa(text);
+    }
 
+    // Function to decode base64 text
+    base64Decode(text) {
+        return atob(text);
+    }
+
+    encrypt(text) {
         // Apply Caesar Cipher on the scrambled text
         let encryptedText = "";
-        for (let i = 0; i < scrambledText.length; i++) {
-            let char = scrambledText[i];
-            let code = scrambledText.charCodeAt(i);
+        for (let i = 0; i < text.length; i++) {
+            let char = text[i];
+            let code = text.charCodeAt(i);
 
             // Encrypt uppercase letters
             if (char.match(/[A-Z]/)) {
@@ -82,17 +89,15 @@ class CaesarCipher {
             encryptedText += String.fromCharCode(code);
         }
 
-        return btoa(encryptedText);
+        return encryptedText;
     }
 
-    decrypt(text, key) {
-        let decryptedText = atob(text);
-
+    decrypt(text) {
         // Decrypt Caesar Cipher
         let decryptedResult = "";
-        for (let i = 0; i < decryptedText.length; i++) {
-            let char = decryptedText[i];
-            let code = decryptedText.charCodeAt(i);
+        for (let i = 0; i < text.length; i++) {
+            let char = text[i];
+            let code = text.charCodeAt(i);
 
             // Decrypt uppercase letters
             if (char.match(/[A-Z]/)) {
@@ -105,26 +110,22 @@ class CaesarCipher {
             decryptedResult += String.fromCharCode(code);
         }
 
-        // Unscramble the text using the provided key
-        const unscrambledText = this.unscramble(decryptedResult, key);
-
-        return unscrambledText;
+        return decryptedResult;
     }
 }
 
-
 // Example usage
 let cipher = new CaesarCipher(3);
-let plaintext = "Hello, World! 1234567890";
+let plaintext = "Hello, World!";
 let key = cipher.generateKey();
 let scrambledText = cipher.scramble(plaintext, key);
 let unscrambledText = cipher.unscramble(scrambledText, key);
-let encryptedText = cipher.encrypt(plaintext, key);
-let decryptedText = cipher.decrypt(encryptedText, key);
+let encryptedText = cipher.encrypt(plaintext);
+let decryptedText = cipher.decrypt(encryptedText);
 
 console.log("Plaintext:", plaintext);
 console.log("Key:", key);
-console.log("Scrambled Text:", scrambledText);
-console.log("Unscrambled Text:", unscrambledText);
+console.log("Scrambled:", scrambledText);
+console.log("Unscrambled:", unscrambledText);
 console.log("Encrypted (Base64):", encryptedText);
 console.log("Decrypted:", decryptedText);
