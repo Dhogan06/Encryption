@@ -30,11 +30,11 @@
         encryptBtn.onclick = () => {
             let output = encrypt(text.value, key.value, shift.value);
             console.log(output);
-            value.innerHTML = output;
+            text.value = output;
         }
 
         decryptBtn.onclick = () => {
-            value.innerHTML = decrypt(text.value, key.value, shift.value);
+            text.value = decrypt(text.value, key.value, shift.value);
         }
     </script>
 </body>
