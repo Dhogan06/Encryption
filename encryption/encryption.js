@@ -145,7 +145,7 @@ console.log("Decrypted:", decryptedText);
 console.log("Reversed:", reversedText);
 console.log("Unreversed:", unreversedText);
 
-const text = "Hello, World!";
+var text = "Hello, World!";
 
 let key2 = cipher.generateKey();
 
