@@ -138,5 +138,6 @@ let decryptedText = cipher.decrypt(encryptedText, key2);
 
 console.log("Plaintext: ", plaintext);
 console.log("Key: ", key);
+console.log("Key2: ", key2);
 console.log("Encrypted (Base64): ", encryptedText);
 console.log("Decrypted: ", decryptedText);
