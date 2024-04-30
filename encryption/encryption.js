@@ -8,28 +8,16 @@ class CaesarCipher {
         let scrambledText = "";
         for (let i = 0; i < text.length; i++) {
             let char = text[i];
-            let charCode = text.charCodeAt(i);
-            let scrambledCharCode = charCode;
-
             if (char.match(/[A-Za-z]/)) {
                 let index = char.toUpperCase().charCodeAt(0) - 65;
                 if (char === char.toLowerCase()) {
-                    scrambledCharCode = key.charCodeAt(index) + 97;
+                    scrambledText += String.fromCharCode(key.charCodeAt(index) + 97);
                 } else {
-                    scrambledCharCode = key.charCodeAt(index) + 65;
+                    scrambledText += String.fromCharCode(key.charCodeAt(index) + 65);
                 }
-            } else if (char.match(/[0-9]/)) {
-                let index = char.charCodeAt(0) - 48;
-                scrambledCharCode = key.charCodeAt(index) + 48;
+            } else {
+                scrambledText += char;
             }
-            // else {
-            //     let index = key.indexOf(char);
-            //     if (index !== -1) {
-            //         scrambledCharCode = index < 26 ? key.charCodeAt(index) + 65 : key.charCodeAt(index);
-            //     }
-            // }
-
-            scrambledText += String.fromCharCode(scrambledCharCode);
         }
         return scrambledText;
     }
@@ -39,28 +27,16 @@ class CaesarCipher {
         let unscrambledText = "";
         for (let i = 0; i < text.length; i++) {
             let char = text[i];
-            let charCode = text.charCodeAt(i);
-            let unscrambledCharCode = charCode;
-
             if (char.match(/[A-Za-z]/)) {
                 let index = char.toUpperCase().charCodeAt(0) - 65;
                 if (char === char.toLowerCase()) {
-                    unscrambledCharCode = key.indexOf(String.fromCharCode(charCode - 32)) + 97;
+                    unscrambledText += String.fromCharCode(key.indexOf(char.toLowerCase()) + 97);
                 } else {
-                    unscrambledCharCode = key.indexOf(String.fromCharCode(charCode)) + 65;
+                    unscrambledText += String.fromCharCode(key.indexOf(char.toUpperCase()) + 65);
                 }
-            } else if (char.match(/[0-9]/)) {
-                let index = char.charCodeAt(0) - 48;
-                unscrambledCharCode = key.indexOf(String.fromCharCode(charCode));
-            } 
-            // else {
-            //     let index = key.indexOf(char);
-            //     if (index !== -1) {
-            //         unscrambledCharCode = index < 26 ? key.indexOf(String.fromCharCode(charCode - 65)) + 65 : key.indexOf(String.fromCharCode(charCode));
-            //     }
-            // }
-
-            unscrambledText += String.fromCharCode(unscrambledCharCode);
+            } else {
+                unscrambledText += char;
+            }
         }
         return unscrambledText;
     }
@@ -70,9 +46,6 @@ class CaesarCipher {
         let key = "";
         for (let i = 0; i < 26; i++) {
             key += String.fromCharCode(65 + i);
-        }
-        for (let i = 0; i < 10; i++) {
-            key += String.fromCharCode(48 + i);
         }
         return this.shuffle(key);
     }
@@ -161,7 +134,7 @@ class CaesarCipher {
 
 // Example usage
 let cipher = new CaesarCipher(3);
-let plaintext = "Hello, World! @#$%^&*()123";
+let plaintext = "Hello, World! @#$%^&*()";
 let key = cipher.generateKey();
 let scrambledText = cipher.scramble(plaintext, key);
 let unscrambledText = cipher.unscramble(scrambledText, key);
@@ -169,7 +142,8 @@ let encryptedText = cipher.encrypt(plaintext, key);
 let decryptedText = cipher.decrypt(encryptedText, key);
 
 console.log("Plaintext:", plaintext);
-console.log("Srambled:", scrambledText);
+console.log("Key:", key);
+console.log("Scrambled:", scrambledText);
 console.log("Unscrambled:", unscrambledText);
 console.log("Encrypted (Base64):", encryptedText);
 console.log("Decrypted:", decryptedText);
