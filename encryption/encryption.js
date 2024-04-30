@@ -21,12 +21,13 @@ class CaesarCipher {
             } else if (char.match(/[0-9]/)) {
                 let index = char.charCodeAt(0) - 48;
                 scrambledCharCode = key.charCodeAt(index) + 48;
-            } else {
-                let index = key.indexOf(char);
-                if (index !== -1) {
-                    scrambledCharCode = index < 26 ? key.charCodeAt(index) + 65 : key.charCodeAt(index);
-                }
             }
+            // else {
+            //     let index = key.indexOf(char);
+            //     if (index !== -1) {
+            //         scrambledCharCode = index < 26 ? key.charCodeAt(index) + 65 : key.charCodeAt(index);
+            //     }
+            // }
 
             scrambledText += String.fromCharCode(scrambledCharCode);
         }
@@ -51,12 +52,13 @@ class CaesarCipher {
             } else if (char.match(/[0-9]/)) {
                 let index = char.charCodeAt(0) - 48;
                 unscrambledCharCode = key.indexOf(String.fromCharCode(charCode));
-            } else {
-                let index = key.indexOf(char);
-                if (index !== -1) {
-                    unscrambledCharCode = index < 26 ? key.indexOf(String.fromCharCode(charCode - 65)) + 65 : key.indexOf(String.fromCharCode(charCode));
-                }
-            }
+            } 
+            // else {
+            //     let index = key.indexOf(char);
+            //     if (index !== -1) {
+            //         unscrambledCharCode = index < 26 ? key.indexOf(String.fromCharCode(charCode - 65)) + 65 : key.indexOf(String.fromCharCode(charCode));
+            //     }
+            // }
 
             unscrambledText += String.fromCharCode(unscrambledCharCode);
         }
@@ -71,10 +73,6 @@ class CaesarCipher {
         }
         for (let i = 0; i < 10; i++) {
             key += String.fromCharCode(48 + i);
-        }
-        const specialChars = "!@#$%^&*()_+-=[]{}|;:,.<>?";
-        for (let i = 0; i < specialChars.length; i++) {
-            key += specialChars[i];
         }
         return this.shuffle(key);
     }
