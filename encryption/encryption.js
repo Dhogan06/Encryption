@@ -150,16 +150,23 @@ let text = "Hello, World!";
 
 let key2 = cipher.generateKey();
 
-let scrambled = cipher.scramble(text, key2);
-let encrypted = cipher.encrypt(scrambled, 6);
-let reversed = cipher.reverse(encrypted);
-let encryptedText2 = cipher.base64Encode(reversed);
+for (let index = 0; index < 10; index++) {
+    let text = cipher.scramble(text, key2);
+    let text = cipher.encrypt(text, 6);
+    let text = cipher.reverse(text);
+    let text = cipher.base64Encode(text);
+}
 
-console.log(encryptedText2);
 
-let text2 = cipher.base64Decode(encryptedText2);
-let reversed2 = cipher.reverse(text2);
-let decrypted = cipher.decrypt(reversed2, 6);
-let decryptedText2 = cipher.unscramble(decrypted, key2);
+console.log(text);
 
-console.log(decryptedText2);
+let text2;
+for (let index = 0; index < 10; index++) {
+    let text2 = cipher.base64Decode(text);
+    let text2 = cipher.reverse(text2);
+    let text2 = cipher.decrypt(text2, 6);
+    let text2 = cipher.unscramble(text2, key2);
+}
+
+
+console.log(text2);
