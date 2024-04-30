@@ -132,9 +132,14 @@ class CaesarCipher {
 let cipher = new CaesarCipher(3);
 let plaintext = "Hello, World! @#$%^&*()";
 let key = cipher.generateKey();
+let scrambledText = cipher.scramble(plaintext, key);
+let unscrambledText = cipher.unscramble(scrambledText, key);
 let encryptedText = cipher.encrypt(plaintext, key);
 let decryptedText = cipher.decrypt(encryptedText, key);
 
 console.log("Plaintext:", plaintext);
+console.log("Key:", key);
+console.log("Scrambled Text:", scrambledText);
+console.log("Unscrambled Text:", unscrambledText);
 console.log("Encrypted (Base64):", encryptedText);
 console.log("Decrypted:", decryptedText);
