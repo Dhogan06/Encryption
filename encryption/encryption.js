@@ -150,21 +150,21 @@ const text = "Hello, World!";
 let key2 = cipher.generateKey();
 
 for (let index = 0; index < 10; index++) {
-    const text = cipher.scramble(text, key2);
-    const text = cipher.encrypt(text, 6);
-    const text = cipher.reverse(text);
-    const text = cipher.base64Encode(text);
+    var text = cipher.scramble(text, key2);
+    var text = cipher.encrypt(text, 6);
+    var text = cipher.reverse(text);
+    var text = cipher.base64Encode(text);
 }
 
 
 console.log(text);
 
-const text2;
+var text2;
 for (let index = 0; index < 10; index++) {
-    const text2 = cipher.base64Decode(text);
-    const text2 = cipher.reverse(text2);
-    const text2 = cipher.decrypt(text2, 6);
-    const text2 = cipher.unscramble(text2, key2);
+    var text2 = cipher.base64Decode(text);
+    var text2 = cipher.reverse(text2);
+    var text2 = cipher.decrypt(text2, 6);
+    var text2 = cipher.unscramble(text2, key2);
 }
 
 
