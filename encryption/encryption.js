@@ -11,9 +11,9 @@ class CaesarCipher {
             if (char.match(/[A-Za-z]/)) {
                 let index = char.toUpperCase().charCodeAt(0) - 65;
                 if (char === char.toLowerCase()) {
-                    scrambledText += String.fromCharCode(key.charCodeAt(index) + 97);
+                    scrambledText += String.fromCharCode(key.indexOf(char.toLowerCase()) + 97);
                 } else {
-                    scrambledText += String.fromCharCode(key.charCodeAt(index) + 65);
+                    scrambledText += String.fromCharCode(key.indexOf(char.toLowerCase()) + 65);
                 }
             } else {
                 scrambledText += char;
@@ -30,9 +30,9 @@ class CaesarCipher {
             if (char.match(/[A-Za-z]/)) {
                 let index = char.toUpperCase().charCodeAt(0) - 65;
                 if (char === char.toLowerCase()) {
-                    unscrambledText += String.fromCharCode(key.charCodeAt(index) + 97);
+                    unscrambledText += String.fromCharCode(key.indexOf(char.toLowerCase()) + 97);
                 } else {
-                    unscrambledText += String.fromCharCode(key.charCodeAt(index) + 65);
+                    unscrambledText += String.fromCharCode(key.indexOf(char.toUpperCase()) + 65);
                 }
             } else {
                 unscrambledText += char;
