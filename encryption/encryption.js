@@ -8,27 +8,16 @@ class CaesarCipher {
         let scrambledText = "";
         for (let i = 0; i < text.length; i++) {
             let char = text[i];
-            let charCode = char.charCodeAt(0);
-            let scrambledCharCode = charCode;
-
             if (char.match(/[A-Za-z]/)) {
                 let index = char.toUpperCase().charCodeAt(0) - 65;
                 if (char === char.toLowerCase()) {
-                    scrambledCharCode = key.charCodeAt(index) + 97;
+                    scrambledText += String.fromCharCode(key[index] + 97);
                 } else {
-                    scrambledCharCode = key.charCodeAt(index) + 65;
+                    scrambledText += String.fromCharCode(key[index] + 65);
                 }
-            } else if (char.match(/[0-9]/)) {
-                let index = char.charCodeAt(0) - 48 + 26 + 26;
-                scrambledCharCode = key.charCodeAt(index);
             } else {
-                let index = key.indexOf(char);
-                if (index !== -1) {
-                    scrambledCharCode = index < 52 ? key.charCodeAt(index) + 65 : key.charCodeAt(index);
-                }
+                scrambledText += char;
             }
-
-            scrambledText += String.fromCharCode(scrambledCharCode);
         }
         return scrambledText;
     }
@@ -38,55 +27,33 @@ class CaesarCipher {
         let unscrambledText = "";
         for (let i = 0; i < text.length; i++) {
             let char = text[i];
-            let charCode = char.charCodeAt(0);
-            let unscrambledCharCode = charCode;
-
             if (char.match(/[A-Za-z]/)) {
                 let index = char.toUpperCase().charCodeAt(0) - 65;
                 if (char === char.toLowerCase()) {
-                    unscrambledCharCode = key.indexOf(String.fromCharCode(charCode - 32)) + 97;
+                    unscrambledText += String.fromCharCode(key.indexOf(index) + 97);
                 } else {
-                    unscrambledCharCode = key.indexOf(String.fromCharCode(charCode)) + 65;
+                    unscrambledText += String.fromCharCode(key.indexOf(index) + 65);
                 }
-            } else if (char.match(/[0-9]/)) {
-                let index = char.charCodeAt(0) - 48 + 26 + 26;
-                unscrambledCharCode = key.indexOf(String.fromCharCode(charCode));
             } else {
-                let index = key.indexOf(char);
-                if (index !== -1) {
-                    unscrambledCharCode = index < 52 ? key.indexOf(String.fromCharCode(charCode - 65)) + 65 : key.indexOf(String.fromCharCode(charCode));
-                }
+                unscrambledText += char;
             }
-
-            unscrambledText += String.fromCharCode(unscrambledCharCode);
         }
         return unscrambledText;
     }
 
     // Function to generate a random key
     generateKey() {
-        let key = "";
-        for (let i = 0; i < 26; i++) {
-            key += String.fromCharCode(65 + i);
-        }
-        for (let i = 0; i < 10; i++) {
-            key += String.fromCharCode(48 + i);
-        }
-        const specialChars = "!@#$%^&*()_+-=[]{}|;:,.<>?";
-        for (let i = 0; i < specialChars.length; i++) {
-            key += specialChars[i];
-        }
+        const key = [...Array(26).keys()];
         return this.shuffle(key);
     }
 
-    // Helper function to shuffle a string key using Fisher-Yates algorithm
-    shuffle(key) {
-        let shuffledKey = key.split('');
-        for (let i = shuffledKey.length - 1; i > 0; i--) {
+    // Helper function to shuffle an array using Fisher-Yates algorithm
+    shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [shuffledKey[i], shuffledKey[j]] = [shuffledKey[j], shuffledKey[i]];
+            [array[i], array[j]] = [array[j], array[i]];
         }
-        return shuffledKey.join('');
+        return array;
     }
 
     encrypt(text, key) {
@@ -163,7 +130,7 @@ class CaesarCipher {
 
 // Example usage
 let cipher = new CaesarCipher(3);
-let plaintext = "Hello, World! @#$%^&*()123";
+let plaintext = "Hello, World! @#$%^&*()";
 let key = cipher.generateKey();
 let encryptedText = cipher.encrypt(plaintext, key);
 let decryptedText = cipher.decrypt(encryptedText, key);
