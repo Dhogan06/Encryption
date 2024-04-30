@@ -31,7 +31,7 @@ function decrypt(text, shift) {
 
 // Example usage
 let plaintext = "Hello, World!";
-let shift = 3;
+let shift = 5;
 let encryptedText = encrypt(plaintext, shift);
 let decryptedText = decrypt(encryptedText, shift);
 
