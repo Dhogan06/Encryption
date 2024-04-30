@@ -46,7 +46,7 @@ class CaesarCipher {
     prepareKey(key) {
         let keyArray = key.split('');
         for (let index = 0; index < keyArray.length; index++) {
-            keyArray[index] = keyArray[index].charCodeAt(0);
+            keyArray[index] = keyArray[index].charCodeAt(0) - 65;
         }
         return keyArray;
     }
@@ -54,7 +54,7 @@ class CaesarCipher {
     // Function to generate a random key
     generateKey() {
         const key = [...Array(26).keys()];
-        return String.fromCharCode(...this.shuffle(key)-65);
+        return String.fromCharCode(...this.shuffle(key).map(num => num + 65));
     }
 
     // Helper function to shuffle an array using Fisher-Yates algorithm
