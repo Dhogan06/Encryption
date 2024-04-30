@@ -1,6 +1,5 @@
 class CaesarCipher {
-    constructor(shift) {
-        this.shift = shift;
+    constructor() {
     }
 
     // Helper function to scramble letters in the text based on a key
@@ -81,7 +80,7 @@ class CaesarCipher {
         return atob(text);
     }
 
-    encrypt(text) {
+    encrypt(text, shift) {
         // Apply Caesar Cipher on the scrambled text
         let encryptedText = "";
         for (let i = 0; i < text.length; i++) {
@@ -90,11 +89,11 @@ class CaesarCipher {
 
             // Encrypt uppercase letters
             if (char.match(/[A-Z]/)) {
-                code = (code - 65 + this.shift) % 26 + 65;
+                code = (code - 65 + shift) % 26 + 65;
             }
             // Encrypt lowercase letters
             else if (char.match(/[a-z]/)) {
-                code = (code - 97 + this.shift) % 26 + 97;
+                code = (code - 97 + shift) % 26 + 97;
             }
             encryptedText += String.fromCharCode(code);
         }
@@ -102,7 +101,7 @@ class CaesarCipher {
         return encryptedText;
     }
 
-    decrypt(text) {
+    decrypt(text, shift) {
         // Decrypt Caesar Cipher
         let decryptedResult = "";
         for (let i = 0; i < text.length; i++) {
@@ -111,11 +110,11 @@ class CaesarCipher {
 
             // Decrypt uppercase letters
             if (char.match(/[A-Z]/)) {
-                code = (code - 65 - this.shift + 26) % 26 + 65;
+                code = (code - 65 - shift + 26) % 26 + 65;
             }
             // Decrypt lowercase letters
             else if (char.match(/[a-z]/)) {
-                code = (code - 97 - this.shift + 26) % 26 + 97;
+                code = (code - 97 - shift + 26) % 26 + 97;
             }
             decryptedResult += String.fromCharCode(code);
         }
@@ -125,14 +124,14 @@ class CaesarCipher {
 }
 
 // Example usage
-let cipher = new CaesarCipher(3);
+let cipher = new CaesarCipher();
 let plaintext = "Hello, World!";
 let key = cipher.generateKey();
 let preparedKey = cipher.prepareKey(key);
 let scrambledText = cipher.scramble(plaintext, key);
 let unscrambledText = cipher.unscramble(scrambledText, key);
-let encryptedText = cipher.encrypt(plaintext);
-let decryptedText = cipher.decrypt(encryptedText);
+let encryptedText = cipher.encrypt(plaintext, 5);
+let decryptedText = cipher.decrypt(encryptedText, 5);
 let reversedText = cipher.reverse(plaintext);
 let unreversedText = cipher.reverse(reversedText);
 
