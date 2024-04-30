@@ -125,7 +125,7 @@ class CaesarCipher {
 
 // Example usage
 let cipher = new CaesarCipher();
-let plaintext = "PHEITCLUYFSKZDJOVAGQXNRWBM";
+let plaintext = "abcdefghijklmnopqrstuvwxyz";
 let key = cipher.generateKey();
 let preparedKey = cipher.prepareKey(key);
 let scrambledText = cipher.scramble(plaintext, key);
