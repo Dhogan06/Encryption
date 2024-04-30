@@ -3,13 +3,13 @@ class CaesarCipher {
         this.shift = shift;
     }
 
-    // Helper function to scramble letters in the text based on a key
+    // Helper function to scramble letters and numbers in the text based on a key
     scramble(text, key) {
         let scrambledText = "";
         for (let i = 0; i < text.length; i++) {
             let char = text[i];
-            if (char.match(/[A-Za-z]/)) {
-                let index = char.toUpperCase().charCodeAt(0) - 65;
+            if (char.match(/[A-Za-z0-9]/)) {
+                let index = char.toUpperCase().charCodeAt(0) - 48; // Adjust index for numbers
                 if (char === char.toLowerCase()) {
                     scrambledText += String.fromCharCode(key[index] + 97);
                 } else {
@@ -22,13 +22,13 @@ class CaesarCipher {
         return scrambledText;
     }
 
-    // Helper function to unscramble letters in the text based on a key
+    // Helper function to unscramble letters and numbers in the text based on a key
     unscramble(text, key) {
         let unscrambledText = "";
         for (let i = 0; i < text.length; i++) {
             let char = text[i];
-            if (char.match(/[A-Za-z]/)) {
-                let index = char.toUpperCase().charCodeAt(0) - 65;
+            if (char.match(/[A-Za-z0-9]/)) {
+                let index = char.toUpperCase().charCodeAt(0) - 48; // Adjust index for numbers
                 if (char === char.toLowerCase()) {
                     unscrambledText += String.fromCharCode(key.indexOf(index) + 97);
                 } else {
@@ -43,7 +43,7 @@ class CaesarCipher {
 
     // Function to generate a random key
     generateKey() {
-        const key = [...Array(26).keys()];
+        const key = [...Array(36).keys()]; // Adjust size for letters and numbers
         return this.shuffle(key);
     }
 
@@ -56,7 +56,6 @@ class CaesarCipher {
         return array;
     }
 
-    // Encrypt function with shift adjustment
     encrypt(text, key) {
         // If no key is provided, generate a random key
         if (!key) {
@@ -84,17 +83,12 @@ class CaesarCipher {
             else if (char.match(/[0-9]/)) {
                 code = (code - 48 + this.shift) % 10 + 48;
             }
-            // Encrypt special characters
-            else {
-                code = (code + this.shift) % 256; // Adjust for ASCII range
-            }
             encryptedText += String.fromCharCode(code);
         }
 
         return btoa(encryptedText);
     }
 
-    // Decrypt function with shift adjustment
     decrypt(text, key) {
         let decryptedText = atob(text);
 
@@ -116,11 +110,6 @@ class CaesarCipher {
             else if (char.match(/[0-9]/)) {
                 code = (code - 48 - this.shift + 10) % 10 + 48;
             }
-            // Decrypt special characters
-            else {
-                code = (code - this.shift) % 256; // Adjust for ASCII range
-                if (code < 0) code += 256; // Handle negative values
-            }
             decryptedResult += String.fromCharCode(code);
         }
 
@@ -131,9 +120,10 @@ class CaesarCipher {
     }
 }
 
+
 // Example usage
 let cipher = new CaesarCipher(3);
-let plaintext = "Hello, World! @#$%^&*()";
+let plaintext = "Hello, World! 1234567890";
 let key = cipher.generateKey();
 let scrambledText = cipher.scramble(plaintext, key);
 let unscrambledText = cipher.unscramble(scrambledText, key);
