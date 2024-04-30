@@ -28,7 +28,9 @@
         }
 
         encryptBtn.onclick = () => {
-            value.innerHTML = encrypt(text.value, key.value, shift.value);
+            let output = encrypt(text.value, key.value, shift.value);
+            console.log(output);
+            value.innerHTML = output;
         }
 
         decryptBtn.onclick = () => {
