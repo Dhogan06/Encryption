@@ -24,7 +24,7 @@
         let genKeyBtn = document.getElementById('gen_key');
         
         genKeyBtn.onclick = () => {
-            key.innerHTML = encrypter.generateKey();
+            key.value = encrypter.generateKey();
         }
 
         encryptBtn.onclick = () => {
