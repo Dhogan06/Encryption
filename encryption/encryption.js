@@ -144,28 +144,3 @@ console.log("Encrypted:", encryptedText);
 console.log("Decrypted:", decryptedText);
 console.log("Reversed:", reversedText);
 console.log("Unreversed:", unreversedText);
-
-var text = "Hello, World!";
-
-let key2 = cipher.generateKey();
-
-for (let index = 0; index < 10; index++) {
-    text = cipher.scramble(text, key2);
-    text = cipher.encrypt(text, 6);
-    text = cipher.reverse(text);
-    text = cipher.base64Encode(text);
-}
-
-
-console.log(text);
-
-var text2 = text;
-for (let index = 0; index < 10; index++) {
-    text2 = cipher.base64Decode(text2);
-    text2 = cipher.reverse(text2);
-    text2 = cipher.decrypt(text2, 6);
-    text2 = cipher.unscramble(text2, key2);
-}
-
-
-console.log(text2);
