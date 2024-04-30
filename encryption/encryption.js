@@ -19,12 +19,12 @@ class CaesarCipher {
                     scrambledCharCode = key.charCodeAt(index) + 65;
                 }
             } else if (char.match(/[0-9]/)) {
-                let index = char.charCodeAt(0) - 48 + 26;
+                let index = char.charCodeAt(0) - 48 + 26 + 26;
                 scrambledCharCode = key.charCodeAt(index);
             } else {
                 let index = key.indexOf(char);
                 if (index !== -1) {
-                    scrambledCharCode = index < 26 ? key.charCodeAt(index) + 65 : key.charCodeAt(index);
+                    scrambledCharCode = index < 52 ? key.charCodeAt(index) + 65 : key.charCodeAt(index);
                 }
             }
 
@@ -49,12 +49,12 @@ class CaesarCipher {
                     unscrambledCharCode = key.indexOf(String.fromCharCode(charCode)) + 65;
                 }
             } else if (char.match(/[0-9]/)) {
-                let index = char.charCodeAt(0) - 48 + 26;
+                let index = char.charCodeAt(0) - 48 + 26 + 26;
                 unscrambledCharCode = key.indexOf(String.fromCharCode(charCode));
             } else {
                 let index = key.indexOf(char);
                 if (index !== -1) {
-                    unscrambledCharCode = index < 26 ? key.indexOf(String.fromCharCode(charCode - 65)) + 65 : key.indexOf(String.fromCharCode(charCode));
+                    unscrambledCharCode = index < 52 ? key.indexOf(String.fromCharCode(charCode - 65)) + 65 : key.indexOf(String.fromCharCode(charCode));
                 }
             }
 
