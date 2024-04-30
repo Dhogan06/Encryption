@@ -17,8 +17,8 @@
     <script>
         let value = document.getElementById('value');
         let key = document.getElementById('key');
-        let shift = document.getElementById('shift').value;
-        let text = document.getElementById('text').value;
+        let shift = document.getElementById('shift');
+        let text = document.getElementById('text');
         let encryptBtn = document.getElementById('encrypt');
         let decryptBtn = document.getElementById('decrypt');
         let genKeyBtn = document.getElementById('gen_key');
@@ -28,11 +28,11 @@
         }
 
         encryptBtn.onclick = () => {
-            value.innerHTML = encrypt(text, key.value, shift);
+            value.innerHTML = encrypt(text.value, key.value, shift.value);
         }
 
         decryptBtn.onclick = () => {
-            value.innerHTML = decrypt(text, key.value, shift);
+            value.innerHTML = decrypt(text.value, key.value, shift.value);
         }
     </script>
 </body>
