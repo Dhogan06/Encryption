@@ -157,7 +157,7 @@ let encryptedText2 = cipher.base64Encode(reversed);
 
 console.log(encryptedText2);
 
-let text2 = cipher.base64Decode(encryptedText);
+let text2 = cipher.base64Decode(encryptedText2);
 let reversed2 = cipher.reverse(text2);
 let decrypted = cipher.decrypt(reversed2, 6);
 let decryptedText2 = cipher.unscramble(decrypted, key2);
