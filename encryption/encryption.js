@@ -5,6 +5,7 @@ class CaesarCipher {
 
     // Helper function to scramble letters in the text based on a key
     scramble(text, key) {
+        key = this.prepareKey(key);
         let scrambledText = "";
         for (let i = 0; i < text.length; i++) {
             let char = text[i];
@@ -24,6 +25,7 @@ class CaesarCipher {
 
     // Helper function to unscramble letters in the text based on a key
     unscramble(text, key) {
+        key = this.prepareKey(key);
         let unscrambledText = "";
         for (let i = 0; i < text.length; i++) {
             let char = text[i];
@@ -41,10 +43,18 @@ class CaesarCipher {
         return unscrambledText;
     }
 
+    prepareKey(key) {
+        let keyArray = key.split('');
+        for (let index = 0; index < keyArray.length; index++) {
+            keyArray[index] = keyArray[index].charCodeAt(0);
+        }
+        return keyArray;
+    }
+
     // Function to generate a random key
     generateKey() {
         const key = [...Array(26).keys()];
-        return this.shuffle(key);
+        return String.fromCharCode(this.shuffle(key));
     }
 
     // Helper function to shuffle an array using Fisher-Yates algorithm
@@ -118,14 +128,16 @@ class CaesarCipher {
 let cipher = new CaesarCipher(3);
 let plaintext = "Hello, World!";
 let key = cipher.generateKey();
+let preparedKey = cipher.prepareKey(key);
 let scrambledText = cipher.scramble(plaintext, key);
 let unscrambledText = cipher.unscramble(scrambledText, key);
 let encryptedText = cipher.encrypt(plaintext);
 let decryptedText = cipher.decrypt(encryptedText);
 
-console.log("Plaintext:", plaintext);
+console.log("Plain Text:", plaintext);
 console.log("Key:", key);
+console.log("Prepared Key:", preparedKey);
 console.log("Scrambled:", scrambledText);
 console.log("Unscrambled:", unscrambledText);
-console.log("Encrypted (Base64):", encryptedText);
+console.log("Encrypted:", encryptedText);
 console.log("Decrypted:", decryptedText);
