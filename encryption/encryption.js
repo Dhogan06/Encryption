@@ -153,13 +153,13 @@ let key2 = cipher.generateKey();
 let scrambled = cipher.scramble(text, key2);
 let encrypted = cipher.encrypt(scrambled, 6);
 let reversed = cipher.reverse(encrypted);
-let encryptedText = cipher.base64Encode(reversed);
+let encryptedText2 = cipher.base64Encode(reversed);
 
-console.log(encryptedText);
+console.log(encryptedText2);
 
 let text2 = cipher.base64Decode(encryptedText);
 let reversed2 = cipher.reverse(text2);
 let decrypted = cipher.decrypt(reversed2, 6);
-let decryptedText = cipher.unscramble(decrypted, key2);
+let decryptedText2 = cipher.unscramble(decrypted, key2);
 
-console.log(decryptedText);
+console.log(decryptedText2);
