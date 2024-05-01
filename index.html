@@ -27,6 +27,10 @@
             key.value = encrypter.generateKey(passphrase.value);
         }
 
+        passphrase.onchange = () => {
+            key.value = encrypter.generateKey(passphrase.value);
+        }
+
         encryptBtn.onclick = () => {
             let output = encrypt(text.value, key.value, shift.value, passphrase.value);
             console.log(output);
