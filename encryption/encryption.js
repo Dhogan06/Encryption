@@ -123,7 +123,6 @@ class DauigiEncryption {
         detail.appendChild(document.createElement('br'));
         detail.appendChild(genKeyBtn);
 
-
         // let desc = document.createElement('p');
         // desc.innerHTML = "";
         // document.body.appendChild(desc);
