@@ -50,6 +50,16 @@ class DauigiEncryption {
         return keyArray;
     }
 
+    decryptKey(key, passphrase) {
+        key = this.base64Decode(key);
+        key = this.decrypt(key, 7);
+        key = this.reverse(key);
+
+        const passphraseArray = passphrase.split('').map(str => '-' + str + '-');
+
+        
+    }
+
     // Function to generate a random key
     generateKey(passphrase) {
         const key = [...Array(26).keys()];
@@ -67,6 +77,10 @@ class DauigiEncryption {
             currentIndex += interval + 1; // Move to the next insertion point
         });
     
+        // output = this.reverse(output);
+        // output = this.encrypt(output, 7);
+        // output = this.base64Encode(output);
+
         return output;
     }
 
@@ -140,7 +154,7 @@ class DauigiEncryption {
 }
 
 let encrypter = new DauigiEncryption();
-console.log(encrypter.generateKey('Hello'));
+console.log(encrypter.generateKey('HelloHelloHelloHelloHelloHello'));
 
 function encrypt(text, key, shift) {
     text = encrypter.reverse(text);
