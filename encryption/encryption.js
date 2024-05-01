@@ -110,15 +110,21 @@ class DauigiEncryption {
             pattern.value = key.value + '-' + shift.value + '-' + algorithm.value;
         };
 
+        let detail = document.createElement('details');
+        let summary = document.createElement('summary');
+        summary.innerHTML = "Pattern (Advanced)";
+        detail.appendChild(summary);
+
+        detail.appendChild(key);
+        detail.appendChild(document.createElement('br'));
+        detail.appendChild(shift);
+        detail.appendChild(document.createElement('br'));
+        detail.appendChild(algorithm);
+        document.body.appendChild(detail);
+        document.body.appendChild(document.createElement('br'));
         document.body.appendChild(pattern);
         document.body.appendChild(document.createElement('br'));
         document.body.appendChild(passphrase);
-        document.body.appendChild(document.createElement('br'));
-        document.body.appendChild(key);
-        document.body.appendChild(document.createElement('br'));
-        document.body.appendChild(shift);
-        document.body.appendChild(document.createElement('br'));
-        document.body.appendChild(algorithm);
         document.body.appendChild(document.createElement('br'));
         document.body.appendChild(text);
         document.body.appendChild(document.createElement('br'));
