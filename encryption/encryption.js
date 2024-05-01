@@ -17,20 +17,51 @@ class DauigiEncryption {
                 return text;
             }
         )
+        this.createAlgorithm(
+            (text, key, shift, passphrase) => {
+                text = this.reverse(text);
+                for (let i = 0; i < 2; i++) {
+                    text = this.scramble(text, key, passphrase);
+                    for (let j = 0; j < 3; j++) {
+                        text = this.encrypt(text, shift);
+                    }
+                    for (let j = 0; j < 4; j++) {
+                        text = this.reverse(text);
+                        text = this.base64Encode(text);
+                    }
+                }
+                return text;
+            },
+            (text, key, shift, passphrase) => {
+                for (let i = 0; i < 2; i++) {
+                    for (let j = 0; j < 4; j++) {
+                        text = this.base64Decode(text);
+                        text = this.reverse(text);
+                    }
+                    for (let j = 0; j < 3; j++) {
+                        text = this.decrypt(text, shift);
+                    }
+                    text = this.unscramble(text, key, passphrase);
+                }
+                text = this.reverse(text);
+                return text;
+            }
+        );
+        this.#form = new this.#Form();
     }
 
-    algorithms = []
+    #algorithms = []
 
     createAlgorithm(encrypt, decrypt) {
-        let algorithm = new this.Algorithm();
+        let algorithm = new this.#Algorithm();
         algorithm.encrypt = encrypt;
         algorithm.decrypt = decrypt;
-        this.algorithms.push(algorithm);
+        this.#algorithms.push(algorithm);
     }
 
     scramble(text, key, passphrase) {
-        key = this.decryptKey(key, passphrase);
-        key = this.prepareKey(key);
+        key = this.#decryptKey(key, passphrase);
+        key = this.#prepareKey(key);
         let scrambledText = "";
         for (let i = 0; i < text.length; i++) {
             let char = text[i];
@@ -49,8 +80,8 @@ class DauigiEncryption {
     }
 
     unscramble(text, key, passphrase) {
-        key = this.decryptKey(key, passphrase);
-        key = this.prepareKey(key);
+        key = this.#decryptKey(key, passphrase);
+        key = this.#prepareKey(key);
         let unscrambledText = "";
         for (let i = 0; i < text.length; i++) {
             let char = text[i];
@@ -68,7 +99,7 @@ class DauigiEncryption {
         return unscrambledText;
     }
 
-    prepareKey(key) {
+    #prepareKey(key) {
         let keyArray = key.split('');
         for (let index = 0; index < keyArray.length; index++) {
             keyArray[index] = keyArray[index].charCodeAt(0) - 65;
@@ -76,7 +107,7 @@ class DauigiEncryption {
         return keyArray;
     }
 
-    decryptKey(key, passphrase) {
+    #decryptKey(key, passphrase) {
         key = this.base64Decode(key);
         key = this.decrypt(key, 7);
         key = this.reverse(key);
@@ -86,7 +117,7 @@ class DauigiEncryption {
 
     generateKey(passphrase) {
         const key = [...Array(26).keys()];
-        let output = String.fromCharCode(...this.shuffle(key).map(num => num + 65));
+        let output = String.fromCharCode(...this.#shuffle(key).map(num => num + 65));
 
         output = passphrase + '|' + output;
 
@@ -97,7 +128,7 @@ class DauigiEncryption {
         return output;
     }
 
-    shuffle(array) {
+    #shuffle(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
@@ -161,7 +192,7 @@ class DauigiEncryption {
         return decryptedResult;
     }
 
-    Algorithm = class {
+    #Algorithm = class {
         constructor() {
 
         }
@@ -169,37 +200,65 @@ class DauigiEncryption {
         encrypt = (text, key, shift, passphrase) => { }
         decrypt = (text, key, shift, passphrase) => { }
     }
+
+    #Form = class {
+
+        constructor(encryption) {
+            this.passphrase = document.createElement('input');
+            this.key = document.createElement('input');
+            this.shift = document.createElement('input');
+            this.algorithm = document.createElement('input');
+            this.text = document.createElement('textarea');
+            this.encryptBtn = document.createElement('button');
+            this.decryptBtn = document.createElement('button');
+            this.genKeyBtn = document.createElement('button');
+
+            this.passphrase.placeholder = "Passphrase";
+            this.key.placeholder = "Key";
+            this.shift.placeholder = "Shift";
+            this.algorithm.placeholder = "Algorithm";
+            this.text.placeholder = "Text to be Encrypted or Decrypted";
+            this.encryptBtn.innerHTML = "Encrypt";
+            this.decryptBtn.innerHTML = "Decrypt";
+            this.genKeyBtn.innerHTML = "Generate Key";
+
+            this.shift.type = "number";
+            this.algorithm.type = "number";
+
+            this.shift.min = "0";
+            this.shift.max = "26";
+            this.algorithm.min = "1";
+            this.algorithm.max = encryption.#algorithms.length;
+
+            this.encryptBtn.onclick = this.#onEncrypt;
+            this.decryptBtn.onclick = this.#onDecrypt;
+            this.genKeyBtn.onclick = this.#onGenKey;
+
+            document.body.appendChild(this.passphrase);
+            document.body.appendChild(this.key);
+            document.body.appendChild(this.shift);
+            document.body.appendChild(this.algorithm);
+            document.body.appendChild(this.text);
+            document.body.appendChild(this.encryptBtn);
+            document.body.appendChild(this.decryptBtn);
+            document.body.appendChild(this.genKeyBtn);
+
+            this.#encryption = encryption;
+        }
+
+        #onEncrypt() {
+            this.text.value = this.#encryption.#algorithms[parseInt(algorithm.value) - 1].encrypt(text.value, key.value, shift.value, passphrase.value);
+        }
+
+        #onDecrypt() {
+            this.text.value = this.#encryption.#algorithms[parseInt(algorithm.value) - 1].decrypt(text.value, key.value, shift.value, passphrase.value);
+        }
+
+        #onGenKey() {
+            this.key.value = this.#encryption.generateKey(passphrase.value);
+        }
+    }
 }
 
 let encrypter = new DauigiEncryption();
 
-encrypter.createAlgorithm(
-    (text, key, shift, passphrase) => {
-        text = encrypter.reverse(text);
-        for (let i = 0; i < 2; i++) {
-            text = encrypter.scramble(text, key, passphrase);
-            for (let j = 0; j < 3; j++) {
-                text = encrypter.encrypt(text, shift);
-            }
-            for (let j = 0; j < 4; j++) {
-                text = encrypter.reverse(text);
-                text = encrypter.base64Encode(text);
-            }
-        }
-        return text;
-    },
-    (text, key, shift, passphrase) => {
-        for (let i = 0; i < 2; i++) {
-            for (let j = 0; j < 4; j++) {
-                text = encrypter.base64Decode(text);
-                text = encrypter.reverse(text);
-            }
-            for (let j = 0; j < 3; j++) {
-                text = encrypter.decrypt(text, shift);
-            }
-            text = encrypter.unscramble(text, key, passphrase);
-        }
-        text = encrypter.reverse(text);
-        return text;
-    }
-);

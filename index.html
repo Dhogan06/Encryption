@@ -6,38 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <input type="text" id="passphrase" placeholder="Passphrase"><br>
-    <input type="text" id="key" placeholder="Key"><br>
-    <input type="number" id="shift" placeholder="Shift" min="0" max="26"><br>
-    <input type="number" id="algorithm" placeholder="Algorithm" min="1"><br>
-    <textarea id="text" cols="45" rows="15" placeholder="Text"></textarea><br>
-    <button id="encrypt">Encrypt</button><br>
-    <button id="decrypt">Decrypt</button><br>
-    <button id="gen_key">Generate Key</button><br>
     <script src="./encryption/encryption.js"></script>
-    <script>
-        let passphrase = document.getElementById('passphrase');
-        let key = document.getElementById('key');
-        let shift = document.getElementById('shift');
-        let algorithm = document.getElementById('algorithm');
-        let text = document.getElementById('text');
-        let encryptBtn = document.getElementById('encrypt');
-        let decryptBtn = document.getElementById('decrypt');
-        let genKeyBtn = document.getElementById('gen_key');
-
-        algorithm.max = encrypter.algorithms.length;
-        
-        genKeyBtn.onclick = () => {
-            key.value = encrypter.generateKey(passphrase.value);
-        }
-
-        encryptBtn.onclick = () => {
-            text.value = encrypter.algorithms[parseInt(algorithm.value) - 1].encrypt(text.value, key.value, shift.value, passphrase.value);
-        }
-
-        decryptBtn.onclick = () => {
-            text.value = encrypter.algorithms[parseInt(algorithm.value) - 1].decrypt(text.value, key.value, shift.value, passphrase.value);
-        }
-    </script>
 </body>
 </html>
