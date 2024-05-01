@@ -144,9 +144,6 @@ class DauigiEncryption {
 }
 
 let encrypter = new DauigiEncryption();
-let keyTest = encrypter.generateKey('HelloHelloHelloHelloHelloHello');
-console.log(keyTest);
-console.log(encrypter.decryptKey(keyTest));
 
 function encrypt(text, key, shift, passphrase) {
     text = encrypter.reverse(text);
@@ -177,36 +174,3 @@ function decrypt(text, key, shift, passphrase) {
     text = encrypter.reverse(text);
     return text;
 }
-
-
-
-// Example usage
-// let cipher = new DauigiEncryption();
-
-// let plaintext = "abcdefghijklmnopqrstuvwxyz";
-// let key = encrypter.generateKey();
-
-// let encryptedText = encrypt(plaintext, key, 6);
-// let decryptedText = decrypt(encryptedText, key, 6);
-
-// console.log(encryptedText);
-// console.log(decryptedText);
-
-
-// let preparedKey = cipher.prepareKey(key);
-// let scrambledText = cipher.scramble(plaintext, key);
-// let unscrambledText = cipher.unscramble(scrambledText, key);
-// let encryptedText = cipher.encrypt(plaintext, 5);
-// let decryptedText = cipher.decrypt(encryptedText, 5);
-// let reversedText = cipher.reverse(plaintext);
-// let unreversedText = cipher.reverse(reversedText);
-
-// console.log("Plain Text:", plaintext);
-// console.log("Key:", key);
-// console.log("Prepared Key:", preparedKey);
-// console.log("Scrambled:", scrambledText);
-// console.log("Unscrambled:", unscrambledText);
-// console.log("Encrypted:", encryptedText);
-// console.log("Decrypted:", decryptedText);
-// console.log("Reversed:", reversedText);
-// console.log("Unreversed:", unreversedText);
