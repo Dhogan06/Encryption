@@ -123,17 +123,23 @@ class DauigiEncryption {
         detail.appendChild(document.createElement('br'));
         detail.appendChild(genKeyBtn);
 
-        document.body.appendChild(detail);
-        document.body.appendChild(document.createElement('br'));
+
+        // let desc = document.createElement('p');
+        // desc.innerHTML = "";
+        // document.body.appendChild(desc);
+
         document.body.appendChild(pattern);
         document.body.appendChild(document.createElement('br'));
+        document.body.appendChild(document.createElement('br'));
         document.body.appendChild(passphrase);
+        document.body.appendChild(detail);
         document.body.appendChild(document.createElement('br'));
         document.body.appendChild(text);
         document.body.appendChild(document.createElement('br'));
         document.body.appendChild(encryptBtn);
         document.body.appendChild(document.createElement('br'));
         document.body.appendChild(decryptBtn);
+
     }
 
     #algorithms = []
