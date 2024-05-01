@@ -65,10 +65,7 @@ class DauigiEncryption {
         const key = [...Array(26).keys()];
         let output = String.fromCharCode(...this.shuffle(key).map(num => num + 65));
 
-        const passphraseArray = passphrase.split('').map(str => '-' + str + '-');
-        const passphraseString = passphraseArray.join('');
-
-        output = passphraseString + '|' + output;
+        output = passphrase + '|' + output;
 
         output = this.reverse(output);
         output = this.encrypt(output, 7);
