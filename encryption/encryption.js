@@ -1,7 +1,5 @@
 class DauigiEncryption {
 
-    #form;
-
     constructor() {
         this.createAlgorithm(
             (text, key, shift, passphrase) => {
@@ -77,13 +75,13 @@ class DauigiEncryption {
         algorithm.max = this.#algorithms.length;
 
         encryptBtn.onclick = () => {
-            text.value = #algorithms[parseInt(algorithm.value) - 1].encrypt(this.text.value, this.key.value, this.shift.value, this.passphrase.value);
+            text.value = this.#algorithms[parseInt(algorithm.value) - 1].encrypt(text.value, key.value, shift.value, passphrase.value);
         };
         decryptBtn.onclick = () => {
-            this.text.value = this.#algorithms[parseInt(this.algorithm.value) - 1].decrypt(this.text.value, this.key.value, this.shift.value, this.passphrase.value);
+            text.value = this.#algorithms[parseInt(algorithm.value) - 1].decrypt(text.value, key.value, shift.value, passphrase.value);
         };
         genKeyBtn.onclick = () => {
-            this.key.value = this.generateKey(this.passphrase.value);
+            key.value = this.generateKey(passphrase.value);
         };
 
         document.body.appendChild(passphrase);
