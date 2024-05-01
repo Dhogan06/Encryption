@@ -53,7 +53,7 @@ class DauigiEncryption {
     // Function to generate a random key
     generateKey(passphrase) {
         const key = [...Array(26).keys()];
-        let output = String.fromCharCode(...shuffle(key).map(num => num + 65));
+        let output = String.fromCharCode(...this.shuffle(key).map(num => num + 65));
     
         const passphraseArray = passphrase.split('').map(str => '-' + str + '-');
     
@@ -69,6 +69,7 @@ class DauigiEncryption {
     
         return output;
     }
+
     // Helper function to shuffle an array using Fisher-Yates algorithm
     shuffle(array) {
         for (let i = array.length - 1; i > 0; i--) {
