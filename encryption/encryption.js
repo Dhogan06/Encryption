@@ -1,8 +1,33 @@
 class DauigiEncryption {
+
     constructor() {
+        this.createAlgorithm(
+            (text, key, shift, passphrase) => {
+                text = this.reverse(text);
+                text = this.encrypt(text, shift);
+                text = this.scramble(text, key, passphrase);
+                text = this.base64Encode(text);
+                return text;
+            },
+            (text, key, shift, passphrase) => {
+                text = this.base64Decode(text);
+                text = this.unscramble(text, key, passphrase);
+                text = this.decrypt(text, shift);
+                text = this.reverse(text);
+                return text;
+            }
+        )
     }
 
-    // Helper function to scramble letters in the text based on a key
+    algorithms = []
+
+    createAlgorithm(encrypt, decrypt) {
+        let algorithm = new this.Algorithm();
+        algorithm.encrypt = encrypt;
+        algorithm.decrypt = decrypt;
+        this.algorithms.push(algorithm);
+    }
+
     scramble(text, key, passphrase) {
         key = this.decryptKey(key, passphrase);
         key = this.prepareKey(key);
@@ -23,7 +48,6 @@ class DauigiEncryption {
         return scrambledText;
     }
 
-    // Helper function to unscramble letters in the text based on a key
     unscramble(text, key, passphrase) {
         key = this.decryptKey(key, passphrase);
         key = this.prepareKey(key);
@@ -60,7 +84,6 @@ class DauigiEncryption {
         return key.replace(passphrase + '|', '');
     }
 
-    // Function to generate a random key
     generateKey(passphrase) {
         const key = [...Array(26).keys()];
         let output = String.fromCharCode(...this.shuffle(key).map(num => num + 65));
@@ -74,7 +97,6 @@ class DauigiEncryption {
         return output;
     }
 
-    // Helper function to shuffle an array using Fisher-Yates algorithm
     shuffle(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -83,17 +105,14 @@ class DauigiEncryption {
         return array;
     }
 
-    // Function to reverse the text
     reverse(text) {
         return text.split('').reverse().join('');
     }
 
-    // Function to encode text to base64
     base64Encode(text) {
         return btoa(text);
     }
 
-    // Function to decode base64 text
     base64Decode(text) {
         return atob(text);
     }
@@ -141,36 +160,46 @@ class DauigiEncryption {
 
         return decryptedResult;
     }
+
+    Algorithm = class {
+        constructor() {
+
+        }
+
+        encrypt = (text, key, shift, passphrase) => { }
+        decrypt = (text, key, shift, passphrase) => { }
+    }
 }
 
 let encrypter = new DauigiEncryption();
 
-function encrypt(text, key, shift, passphrase) {
-    text = encrypter.reverse(text);
-    for (let i = 0; i < 2; i++) {
-        text = encrypter.scramble(text, key, passphrase);
-        for (let j = 0; j < 3; j++) {
-            text = encrypter.encrypt(text, shift);
+encrypter.createAlgorithm(
+    (text, key, shift, passphrase) => {
+        text = encrypter.reverse(text);
+        for (let i = 0; i < 2; i++) {
+            text = encrypter.scramble(text, key, passphrase);
+            for (let j = 0; j < 3; j++) {
+                text = encrypter.encrypt(text, shift);
+            }
+            for (let j = 0; j < 4; j++) {
+                text = encrypter.reverse(text);
+                text = encrypter.base64Encode(text);
+            }
         }
-        for (let j = 0; j < 4; j++) {
-            text = encrypter.reverse(text);
-            text = encrypter.base64Encode(text);
+        return text;
+    },
+    (text, key, shift, passphrase) => {
+        for (let i = 0; i < 2; i++) {
+            for (let j = 0; j < 4; j++) {
+                text = encrypter.base64Decode(text);
+                text = encrypter.reverse(text);
+            }
+            for (let j = 0; j < 3; j++) {
+                text = encrypter.decrypt(text, shift);
+            }
+            text = encrypter.unscramble(text, key, passphrase);
         }
+        text = encrypter.reverse(text);
+        return text;
     }
-    return text;
-}
-
-function decrypt(text, key, shift, passphrase) {
-    for (let i = 0; i < 2; i++) {
-        for (let j = 0; j < 4; j++) {
-            text = encrypter.base64Decode(text);
-            text = encrypter.reverse(text);
-        }
-        for (let j = 0; j < 3; j++) {
-            text = encrypter.decrypt(text, shift);
-        }
-        text = encrypter.unscramble(text, key, passphrase);
-    }
-    text = encrypter.reverse(text);
-    return text;
-}
+);
