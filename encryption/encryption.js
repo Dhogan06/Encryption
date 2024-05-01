@@ -78,7 +78,7 @@ class DauigiEncryption {
 
     decryptKey(key, passphrase) {
 
-        shift = key.split('#')[0];
+        shift = parseInt(key.split('#')[0]);
         key = key.split('#')[1];
 
         key = this.base64Decode(key);
