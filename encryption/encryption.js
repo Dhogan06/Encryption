@@ -111,13 +111,21 @@ class DauigiEncryption {
         };
 
         document.body.appendChild(pattern);
+        document.body.appendChild(document.createElement('br'));
         document.body.appendChild(passphrase);
+        document.body.appendChild(document.createElement('br'));
         document.body.appendChild(key);
+        document.body.appendChild(document.createElement('br'));
         document.body.appendChild(shift);
+        document.body.appendChild(document.createElement('br'));
         document.body.appendChild(algorithm);
+        document.body.appendChild(document.createElement('br'));
         document.body.appendChild(text);
+        document.body.appendChild(document.createElement('br'));
         document.body.appendChild(encryptBtn);
+        document.body.appendChild(document.createElement('br'));
         document.body.appendChild(decryptBtn);
+        document.body.appendChild(document.createElement('br'));
         document.body.appendChild(genKeyBtn);
     }
 
