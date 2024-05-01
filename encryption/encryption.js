@@ -123,9 +123,16 @@ class DauigiEncryption {
         detail.appendChild(document.createElement('br'));
         detail.appendChild(genKeyBtn);
 
-        // let desc = document.createElement('p');
-        // desc.innerHTML = "";
-        // document.body.appendChild(desc);
+        let lock = document.createElement('button');
+        lock.innerHTML = "Lock Pattern";
+        lock.onclick = () => {
+            pattern.disabled = !passphrase.disabled;
+            passphrase.disabled = !passphrase.disabled;
+            key.disabled = !key.disabled;
+            shift.disabled = !shift.disabled;
+            algorithm.disabled = !algorithm.disabled;
+            genKeyBtn.disabled = !genKeyBtn.disabled;
+        }
 
         document.body.appendChild(pattern);
         document.body.appendChild(document.createElement('br'));
