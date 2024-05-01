@@ -48,28 +48,41 @@ class DauigiEncryption {
             }
         );
 
+        this.#createForm();
+    }
+
+    #algorithms = []
+
+    #createForm() {
         let pattern = document.createElement('textarea');
-        let passphrase = document.createElement('input');
-        let key = document.createElement('input');
-        let shift = document.createElement('input');
-        let algorithm = document.createElement('input');
-        let text = document.createElement('textarea');
-        let encryptBtn = document.createElement('button');
-        let decryptBtn = document.createElement('button');
-        let genKeyBtn = document.createElement('button');
-
+        pattern.style.marginBottom = "10px";
         pattern.placeholder = "Pattern";
+        let passphrase = document.createElement('input');
+        passphrase.style.marginBottom = "10px";
         passphrase.placeholder = "Passphrase";
+        let key = document.createElement('input');
+        key.style.marginBottom = "10px";
         key.placeholder = "Key";
+        let shift = document.createElement('input');
+        shift.style.marginBottom = "10px";
         shift.placeholder = "Shift";
+        let algorithm = document.createElement('input');
+        algorithm.style.marginBottom = "10px";
         algorithm.placeholder = "Algorithm";
+        let text = document.createElement('textarea');
+        text.style.marginBottom = "10px";
         text.placeholder = "Text to be Encrypted or Decrypted";
-        encryptBtn.innerHTML = "Encrypt";
-        decryptBtn.innerHTML = "Decrypt";
-        genKeyBtn.innerHTML = "Generate Key";
-
         text.cols = "45";
         text.rows = "15";
+        let encryptBtn = document.createElement('button');
+        encryptBtn.style.marginBottom = "10px";
+        encryptBtn.innerHTML = "Encrypt";
+        let decryptBtn = document.createElement('button');
+        decryptBtn.style.marginBottom = "10px";
+        decryptBtn.innerHTML = "Decrypt";
+        let genKeyBtn = document.createElement('button');
+        genKeyBtn.style.marginBottom = "10px";
+        genKeyBtn.innerHTML = "Generate Key";
 
         shift.type = "number";
         algorithm.type = "number";
@@ -96,12 +109,12 @@ class DauigiEncryption {
             algorithm.value = patternArray[2];
         }
         encryptBtn.onclick = () => {
-            if (key != '' && shift != '' && algorithm != '') {
+            if (key.value !== '' && shift.value !== '' && algorithm.value !== '') {
                 text.value = this.#algorithms[parseInt(algorithm.value) - 1].encrypt(text.value, key.value, shift.value, passphrase.value);
             }
         };
         decryptBtn.onclick = () => {
-            if (key != '' && shift != '' && algorithm != '') {
+            if (key.value !== '' && shift.value !== '' && algorithm.value !== '') {
                 text.value = this.#algorithms[parseInt(algorithm.value) - 1].decrypt(text.value, key.value, shift.value, passphrase.value);
             }
         };
@@ -134,6 +147,12 @@ class DauigiEncryption {
             genKeyBtn.disabled = !genKeyBtn.disabled;
         }
 
+        let container = document.createElement('div');
+        container.style.display = "flex";
+        container.style.justifyContent = "space-between";
+        container.appendChild(encryptBtn);
+        container.appendChild(decryptBtn);
+
         document.body.appendChild(pattern);
         document.body.appendChild(document.createElement('br'));
         document.body.appendChild(passphrase);
@@ -143,13 +162,9 @@ class DauigiEncryption {
         document.body.appendChild(document.createElement('br'));
         document.body.appendChild(text);
         document.body.appendChild(document.createElement('br'));
-        document.body.appendChild(encryptBtn);
-        document.body.appendChild(document.createElement('br'));
-        document.body.appendChild(decryptBtn);
+        document.body.appendChild(container);
 
     }
-
-    #algorithms = []
 
     createAlgorithm(encrypt, decrypt) {
         let algorithm = new this.#Algorithm();
