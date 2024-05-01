@@ -109,6 +109,7 @@ class DauigiEncryption {
             key.value = this.generateKey(passphrase.value);
         };
 
+        document.body.appendChild(pattern);
         document.body.appendChild(passphrase);
         document.body.appendChild(key);
         document.body.appendChild(shift);
