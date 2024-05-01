@@ -129,8 +129,8 @@ class DauigiEncryption {
 
         document.body.appendChild(pattern);
         document.body.appendChild(document.createElement('br'));
-        document.body.appendChild(document.createElement('br'));
         document.body.appendChild(passphrase);
+        document.body.appendChild(document.createElement('br'));
         document.body.appendChild(detail);
         document.body.appendChild(document.createElement('br'));
         document.body.appendChild(text);
