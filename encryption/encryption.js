@@ -3,7 +3,8 @@ class DauigiEncryption {
     }
 
     // Helper function to scramble letters in the text based on a key
-    scramble(text, key) {
+    scramble(text, key, passphrase) {
+        key = this.decryptKey(key, passphrase);
         key = this.prepareKey(key);
         let scrambledText = "";
         for (let i = 0; i < text.length; i++) {
@@ -23,7 +24,8 @@ class DauigiEncryption {
     }
 
     // Helper function to unscramble letters in the text based on a key
-    unscramble(text, key) {
+    unscramble(text, key, passphrase) {
+        key = this.decryptKey(key, passphrase);
         key = this.prepareKey(key);
         let unscrambledText = "";
         for (let i = 0; i < text.length; i++) {
@@ -55,31 +57,22 @@ class DauigiEncryption {
         key = this.decrypt(key, 7);
         key = this.reverse(key);
 
-        const passphraseArray = passphrase.split('').map(str => '-' + str + '-');
-
-        
+        return key.replace(passphrase + '|', '');
     }
 
     // Function to generate a random key
     generateKey(passphrase) {
         const key = [...Array(26).keys()];
         let output = String.fromCharCode(...this.shuffle(key).map(num => num + 65));
-    
+
         const passphraseArray = passphrase.split('').map(str => '-' + str + '-');
-    
-        const length = output.length;
-        const passphraseLength = passphraseArray.length;
-        const interval = Math.floor(length / (passphraseLength + 1));
-        let currentIndex = interval;
-    
-        passphraseArray.forEach(element => {
-            output = output.slice(0, currentIndex) + element + output.slice(currentIndex);
-            currentIndex += interval + 1; // Move to the next insertion point
-        });
-    
-        // output = this.reverse(output);
-        // output = this.encrypt(output, 7);
-        // output = this.base64Encode(output);
+        const passphraseString = passphraseArray.join('');
+
+        output = passphraseString + '|' + output;
+
+        output = this.reverse(output);
+        output = this.encrypt(output, 7);
+        output = this.base64Encode(output);
 
         return output;
     }
@@ -154,12 +147,14 @@ class DauigiEncryption {
 }
 
 let encrypter = new DauigiEncryption();
-console.log(encrypter.generateKey('HelloHelloHelloHelloHelloHello'));
+let keyTest = encrypter.generateKey('HelloHelloHelloHelloHelloHello');
+console.log(keyTest);
+console.log(encrypter.decryptKey(keyTest));
 
-function encrypt(text, key, shift) {
+function encrypt(text, key, shift, passphrase) {
     text = encrypter.reverse(text);
     for (let i = 0; i < 2; i++) {
-        text = encrypter.scramble(text, key);
+        text = encrypter.scramble(text, key, passphrase);
         for (let j = 0; j < 3; j++) {
             text = encrypter.encrypt(text, shift);
         }
@@ -171,7 +166,7 @@ function encrypt(text, key, shift) {
     return text;
 }
 
-function decrypt(text, key, shift) {
+function decrypt(text, key, shift, passphrase) {
     for (let i = 0; i < 2; i++) {
         for (let j = 0; j < 4; j++) {
             text = encrypter.base64Decode(text);
@@ -180,7 +175,7 @@ function decrypt(text, key, shift) {
         for (let j = 0; j < 3; j++) {
             text = encrypter.decrypt(text, shift);
         }
-        text = encrypter.unscramble(text, key);
+        text = encrypter.unscramble(text, key, passphrase);
     }
     text = encrypter.reverse(text);
     return text;
