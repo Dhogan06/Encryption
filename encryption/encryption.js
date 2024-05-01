@@ -120,6 +120,9 @@ class DauigiEncryption {
         detail.appendChild(shift);
         detail.appendChild(document.createElement('br'));
         detail.appendChild(algorithm);
+        detail.appendChild(document.createElement('br'));
+        detail.appendChild(genKeyBtn);
+
         document.body.appendChild(detail);
         document.body.appendChild(document.createElement('br'));
         document.body.appendChild(pattern);
@@ -131,8 +134,6 @@ class DauigiEncryption {
         document.body.appendChild(encryptBtn);
         document.body.appendChild(document.createElement('br'));
         document.body.appendChild(decryptBtn);
-        document.body.appendChild(document.createElement('br'));
-        document.body.appendChild(genKeyBtn);
     }
 
     #algorithms = []
