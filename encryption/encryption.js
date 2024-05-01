@@ -92,7 +92,7 @@ class DauigiEncryption {
         const key = [...Array(26).keys()];
         let output = String.fromCharCode(...this.shuffle(key).map(num => num + 65));
 
-        shift = Math.floor(Math.random() * (1 - 26 + 1) + 1);
+        shift = Math.floor(Math.random() * (26 - 1 + 1) + 1);
 
         output = passphrase + '|' + output;
 
