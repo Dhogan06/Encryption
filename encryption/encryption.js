@@ -204,10 +204,13 @@ class DauigiEncryption {
     }
 
     #Form = class {
-
-        encryption;
-
+/**
+ * 
+ * @param {DauigiEncryption} encryption 
+ */
         constructor(encryption) {
+            this.encryption = encryption;
+
             this.passphrase = document.createElement('input');
             this.key = document.createElement('input');
             this.shift = document.createElement('input');
@@ -246,8 +249,6 @@ class DauigiEncryption {
             document.body.appendChild(this.encryptBtn);
             document.body.appendChild(this.decryptBtn);
             document.body.appendChild(this.genKeyBtn);
-
-            this.encryption = encryption;
         }
 
         #onEncrypt() {
