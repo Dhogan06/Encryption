@@ -86,46 +86,46 @@ class DauigiEncryption {
         algorithm.min = "1";
         algorithm.max = this.#algorithms.length;
 
-        // Set onchange functions
-        key.onchange = () => updatePattern();
-        shift.onchange = () => updatePattern();
-        algorithm.onchange = () => updatePattern();
-        pattern.onchange = () => updateFields();
-
         // Functions for updating pattern and fields
-        function updatePattern() {
+        let updatePattern = () => {
             pattern.value = `${key.value}-${shift.value}-${algorithm.value}`;
         }
 
-        function updateFields() {
+        let updateFields = () => {
             let patternArray = pattern.value.split('-');
             key.value = patternArray[0];
             shift.value = patternArray[1];
             algorithm.value = patternArray[2];
         }
 
-        // Set onclick functions for encryption, decryption, and key generation
-        encryptBtn.onclick = () => encrypt();
-        decryptBtn.onclick = () => decrypt();
-        genKeyBtn.onclick = () => generateKey();
+        // Set onchange functions
+        key.onchange = () => updatePattern();
+        shift.onchange = () => updatePattern();
+        algorithm.onchange = () => updatePattern();
+        pattern.onchange = () => updateFields();
 
         // Functions for encryption, decryption, and key generation
-        encrypt = () => {
+        let encrypt = () => {
             if (key.value !== '' && shift.value !== '' && algorithm.value !== '') {
                 text.value = this.#algorithms[parseInt(algorithm.value) - 1].encrypt(text.value, key.value, shift.value, passphrase.value);
             }
         }
 
-        decrypt = () => {
+        let decrypt = () => {
             if (key.value !== '' && shift.value !== '' && algorithm.value !== '') {
                 text.value = this.#algorithms[parseInt(algorithm.value) - 1].decrypt(text.value, key.value, shift.value, passphrase.value);
             }
         }
 
-        generateKey = () => {
+        let generateKey = () => {
             key.value = this.generateKey(passphrase.value);
             updatePattern();
         }
+
+        // Set onclick functions for encryption, decryption, and key generation
+        encryptBtn.onclick = () => encrypt();
+        decryptBtn.onclick = () => decrypt();
+        genKeyBtn.onclick = () => generateKey();
 
         // Create details element for advanced pattern
         let detail = document.createElement('details');
@@ -142,13 +142,8 @@ class DauigiEncryption {
         detail.appendChild(document.createElement('br'));
         detail.appendChild(genKeyBtn);
 
-        // Create lock button
-        let lock = document.createElement('button');
-        lock.innerHTML = "Lock Pattern";
-        lock.onclick = () => togglePatternLock();
-
         // Function for toggling pattern lock
-        function togglePatternLock() {
+        let togglePatternLock = () => {
             pattern.disabled = !pattern.disabled;
             passphrase.disabled = !passphrase.disabled;
             key.disabled = !key.disabled;
@@ -156,6 +151,11 @@ class DauigiEncryption {
             algorithm.disabled = !algorithm.disabled;
             genKeyBtn.disabled = !genKeyBtn.disabled;
         }
+
+        // Create lock button
+        let lock = document.createElement('button');
+        lock.innerHTML = "Lock Pattern";
+        lock.onclick = () => togglePatternLock();
 
         // Append elements to document body
         document.body.appendChild(pattern);
