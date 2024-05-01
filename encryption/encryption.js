@@ -51,11 +51,24 @@ class DauigiEncryption {
     }
 
     // Function to generate a random key
-    generateKey() {
+    generateKey(passphrase) {
         const key = [...Array(26).keys()];
-        return String.fromCharCode(...this.shuffle(key).map(num => num + 65));
+        let output = String.fromCharCode(...shuffle(key).map(num => num + 65));
+    
+        const passphraseArray = passphrase.split('').map(str => '-' + str + '-');
+    
+        const length = output.length;
+        const passphraseLength = passphraseArray.length;
+        const interval = Math.floor(length / (passphraseLength + 1));
+        let currentIndex = interval;
+    
+        passphraseArray.forEach(element => {
+            output = output.slice(0, currentIndex) + element + output.slice(currentIndex);
+            currentIndex += interval + 1; // Move to the next insertion point
+        });
+    
+        return output;
     }
-
     // Helper function to shuffle an array using Fisher-Yates algorithm
     shuffle(array) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -126,6 +139,7 @@ class DauigiEncryption {
 }
 
 let encrypter = new DauigiEncryption();
+console.log(encrypter.generateKey('Hello'));
 
 function encrypt(text, key, shift) {
     text = encrypter.reverse(text);
@@ -156,6 +170,8 @@ function decrypt(text, key, shift) {
     text = encrypter.reverse(text);
     return text;
 }
+
+
 
 // Example usage
 // let cipher = new DauigiEncryption();
