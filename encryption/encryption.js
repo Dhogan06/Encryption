@@ -1,5 +1,7 @@
 class DauigiEncryption {
 
+    #form;
+
     constructor() {
         this.createAlgorithm(
             (text, key, shift, passphrase) => {
@@ -261,4 +263,3 @@ class DauigiEncryption {
 }
 
 let encrypter = new DauigiEncryption();
-
