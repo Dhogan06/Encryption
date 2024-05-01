@@ -18,7 +18,7 @@ class DauigiEncryption {
                 text = this.reverse(text);
                 return text;
             }
-        )
+        );
         this.createAlgorithm(
             (text, key, shift, passphrase) => {
                 text = this.reverse(text);
@@ -49,7 +49,51 @@ class DauigiEncryption {
                 return text;
             }
         );
-        this.#form = new this.#Form(this);
+
+        let passphrase = document.createElement('input');
+        let key = document.createElement('input');
+        let shift = document.createElement('input');
+        let algorithm = document.createElement('input');
+        let text = document.createElement('textarea');
+        let encryptBtn = document.createElement('button');
+        let decryptBtn = document.createElement('button');
+        let genKeyBtn = document.createElement('button');
+
+        passphrase.placeholder = "Passphrase";
+        key.placeholder = "Key";
+        shift.placeholder = "Shift";
+        algorithm.placeholder = "Algorithm";
+        text.placeholder = "Text to be Encrypted or Decrypted";
+        encryptBtn.innerHTML = "Encrypt";
+        decryptBtn.innerHTML = "Decrypt";
+        genKeyBtn.innerHTML = "Generate Key";
+
+        shift.type = "number";
+        algorithm.type = "number";
+
+        shift.min = "0";
+        shift.max = "26";
+        algorithm.min = "1";
+        algorithm.max = this.#algorithms.length;
+
+        encryptBtn.onclick = () => {
+            text.value = #algorithms[parseInt(algorithm.value) - 1].encrypt(this.text.value, this.key.value, this.shift.value, this.passphrase.value);
+        };
+        decryptBtn.onclick = () => {
+            this.text.value = this.#algorithms[parseInt(this.algorithm.value) - 1].decrypt(this.text.value, this.key.value, this.shift.value, this.passphrase.value);
+        };
+        genKeyBtn.onclick = () => {
+            this.key.value = this.generateKey(this.passphrase.value);
+        };
+
+        document.body.appendChild(passphrase);
+        document.body.appendChild(key);
+        document.body.appendChild(shift);
+        document.body.appendChild(algorithm);
+        document.body.appendChild(text);
+        document.body.appendChild(encryptBtn);
+        document.body.appendChild(decryptBtn);
+        document.body.appendChild(genKeyBtn);
     }
 
     #algorithms = []
@@ -201,67 +245,6 @@ class DauigiEncryption {
 
         encrypt = (text, key, shift, passphrase) => { }
         decrypt = (text, key, shift, passphrase) => { }
-    }
-
-    #Form = class {
-/**
- * 
- * @param {DauigiEncryption} encryption 
- */
-        constructor(encryption) {
-            this.encryption = encryption;
-
-            this.passphrase = document.createElement('input');
-            this.key = document.createElement('input');
-            this.shift = document.createElement('input');
-            this.algorithm = document.createElement('input');
-            this.text = document.createElement('textarea');
-            this.encryptBtn = document.createElement('button');
-            this.decryptBtn = document.createElement('button');
-            this.genKeyBtn = document.createElement('button');
-
-            this.passphrase.placeholder = "Passphrase";
-            this.key.placeholder = "Key";
-            this.shift.placeholder = "Shift";
-            this.algorithm.placeholder = "Algorithm";
-            this.text.placeholder = "Text to be Encrypted or Decrypted";
-            this.encryptBtn.innerHTML = "Encrypt";
-            this.decryptBtn.innerHTML = "Decrypt";
-            this.genKeyBtn.innerHTML = "Generate Key";
-
-            this.shift.type = "number";
-            this.algorithm.type = "number";
-
-            this.shift.min = "0";
-            this.shift.max = "26";
-            this.algorithm.min = "1";
-            this.algorithm.max = encryption.#algorithms.length;
-
-            this.encryptBtn.onclick = this.#onEncrypt;
-            this.decryptBtn.onclick = this.#onDecrypt;
-            this.genKeyBtn.onclick = this.#onGenKey;
-
-            document.body.appendChild(this.passphrase);
-            document.body.appendChild(this.key);
-            document.body.appendChild(this.shift);
-            document.body.appendChild(this.algorithm);
-            document.body.appendChild(this.text);
-            document.body.appendChild(this.encryptBtn);
-            document.body.appendChild(this.decryptBtn);
-            document.body.appendChild(this.genKeyBtn);
-        }
-
-        #onEncrypt() {
-            this.text.value = this.encryption.#algorithms[parseInt(this.algorithm.value) - 1].encrypt(this.text.value, this.key.value, this.shift.value, this.passphrase.value);
-        }
-
-        #onDecrypt() {
-            this.text.value = this.encryption.#algorithms[parseInt(this.algorithm.value) - 1].decrypt(this.text.value, this.key.value, this.shift.value, this.passphrase.value);
-        }
-
-        #onGenKey() {
-            this.key.value = this.encryption.generateKey(this.passphrase.value);
-        }
     }
 }
 
