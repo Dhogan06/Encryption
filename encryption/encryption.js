@@ -110,19 +110,19 @@ class DauigiEncryption {
         genKeyBtn.onclick = () => generateKey();
 
         // Functions for encryption, decryption, and key generation
-        function encrypt() {
+        encrypt = () => {
             if (key.value !== '' && shift.value !== '' && algorithm.value !== '') {
                 text.value = this.#algorithms[parseInt(algorithm.value) - 1].encrypt(text.value, key.value, shift.value, passphrase.value);
             }
         }
 
-        function decrypt() {
+        decrypt = () => {
             if (key.value !== '' && shift.value !== '' && algorithm.value !== '') {
                 text.value = this.#algorithms[parseInt(algorithm.value) - 1].decrypt(text.value, key.value, shift.value, passphrase.value);
             }
         }
 
-        function generateKey() {
+        generateKey = () => {
             key.value = this.generateKey(passphrase.value);
             updatePattern();
         }
