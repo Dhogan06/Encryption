@@ -32,7 +32,7 @@
         }
 
         encryptBtn.onclick = () => {
-            let output = encrypter.algorithms[parseInt(algorithm.value) - 1].encrypt(text.value, key.value, shift.value, passphrase.value);
+            text.value = encrypter.algorithms[parseInt(algorithm.value) - 1].encrypt(text.value, key.value, shift.value, passphrase.value);
         }
 
         decryptBtn.onclick = () => {
