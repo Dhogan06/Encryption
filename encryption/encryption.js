@@ -77,8 +77,12 @@ class DauigiEncryption {
     }
 
     decryptKey(key, passphrase) {
+
+        shift = key.split('#')[0];
+        key = key.split('#')[1];
+
         key = this.base64Decode(key);
-        key = this.decrypt(key, 7);
+        key = this.decrypt(key, shift);
         key = this.reverse(key);
 
         return key.replace(passphrase + '|', '');
@@ -88,13 +92,15 @@ class DauigiEncryption {
         const key = [...Array(26).keys()];
         let output = String.fromCharCode(...this.shuffle(key).map(num => num + 65));
 
+        shift = Math.floor(Math.random() * (1 - 26 + 1) + 1);
+
         output = passphrase + '|' + output;
 
         output = this.reverse(output);
-        output = this.encrypt(output, 7);
+        output = this.encrypt(output, shift);
         output = this.base64Encode(output);
 
-        return output;
+        return shift + '#' + output;
     }
 
     shuffle(array) {
