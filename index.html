@@ -8,7 +8,7 @@
 <body>
     <input type="text" id="passphrase" placeholder="passphrase"><br>
     <input type="text" id="key" placeholder="Key"><br>
-    <input type="number" id="shift" placeholder="Shift"><br>
+    <input type="number" id="shift" placeholder="Shift" min="0" max="26"><br>
     <input type="number" id="algorithm" placeholder="Algorithm" min="1"><br>
     <textarea id="text" cols="45" rows="15" placeholder="Text"></textarea><br>
     <button id="encrypt">Encrypt</button><br>
@@ -31,16 +31,12 @@
             key.value = encrypter.generateKey(passphrase.value);
         }
 
-        passphrase.onchange = () => {
-            key.value = encrypter.generateKey(passphrase.value);
-        }
-
         encryptBtn.onclick = () => {
-            let output = encrypter.algorithms[algorithm.value].encrypt(text.value, key.value, shift.value, passphrase.value);
+            let output = encrypter.algorithms[parseInt(algorithm.value) - 1].encrypt(text.value, key.value, shift.value, passphrase.value);
         }
 
         decryptBtn.onclick = () => {
-            text.value = encrypter.algorithms[algorithm.value].decrypt(text.value, key.value, shift.value, passphrase.value);
+            text.value = encrypter.algorithms[parseInt(algorithm.value) - 1].decrypt(text.value, key.value, shift.value, passphrase.value);
         }
     </script>
 </body>
