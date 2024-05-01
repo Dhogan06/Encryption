@@ -234,9 +234,9 @@ class DauigiEncryption {
             this.algorithm.min = "1";
             this.algorithm.max = encryption.#algorithms.length;
 
-            this.encryptBtn.onclick = () => this.#onEncrypt;
-            this.decryptBtn.onclick = () => this.#onDecrypt;
-            this.genKeyBtn.onclick = () => this.#onGenKey;
+            this.encryptBtn.onclick = this.#onEncrypt;
+            this.decryptBtn.onclick = this.#onDecrypt;
+            this.genKeyBtn.onclick = this.#onGenKey;
 
             document.body.appendChild(this.passphrase);
             document.body.appendChild(this.key);
