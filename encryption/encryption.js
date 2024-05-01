@@ -107,6 +107,7 @@ class DauigiEncryption {
         };
         genKeyBtn.onclick = () => {
             key.value = this.generateKey(passphrase.value);
+            pattern.value = key.value + '-' + shift.value + '-' + algorithm.value;
         };
 
         document.body.appendChild(pattern);
