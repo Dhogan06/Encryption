@@ -49,7 +49,7 @@ class DauigiEncryption {
                 return text;
             }
         );
-        this.#form = new this.#Form();
+        this.#form = new this.#Form(this);
     }
 
     #algorithms = []
