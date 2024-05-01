@@ -205,7 +205,7 @@ class DauigiEncryption {
 
     #Form = class {
 
-        #encryption;
+        encryption;
 
         constructor(encryption) {
             this.passphrase = document.createElement('input');
@@ -234,9 +234,9 @@ class DauigiEncryption {
             this.algorithm.min = "1";
             this.algorithm.max = encryption.#algorithms.length;
 
-            this.encryptBtn.onclick = this.#onEncrypt;
-            this.decryptBtn.onclick = this.#onDecrypt;
-            this.genKeyBtn.onclick = this.#onGenKey;
+            this.encryptBtn.onclick = () => this.#onEncrypt;
+            this.decryptBtn.onclick = () => this.#onDecrypt;
+            this.genKeyBtn.onclick = () => this.#onGenKey;
 
             document.body.appendChild(this.passphrase);
             document.body.appendChild(this.key);
@@ -247,19 +247,19 @@ class DauigiEncryption {
             document.body.appendChild(this.decryptBtn);
             document.body.appendChild(this.genKeyBtn);
 
-            this.#encryption = encryption;
+            this.encryption = encryption;
         }
 
         #onEncrypt() {
-            this.text.value = this.#encryption.#algorithms[parseInt(algorithm.value) - 1].encrypt(text.value, key.value, shift.value, passphrase.value);
+            this.text.value = this.encryption.#algorithms[parseInt(this.algorithm.value) - 1].encrypt(this.text.value, this.key.value, this.shift.value, this.passphrase.value);
         }
 
         #onDecrypt() {
-            this.text.value = this.#encryption.#algorithms[parseInt(algorithm.value) - 1].decrypt(text.value, key.value, shift.value, passphrase.value);
+            this.text.value = this.encryption.#algorithms[parseInt(this.algorithm.value) - 1].decrypt(this.text.value, this.key.value, this.shift.value, this.passphrase.value);
         }
 
         #onGenKey() {
-            this.key.value = this.#encryption.generateKey(passphrase.value);
+            this.key.value = this.encryption.generateKey(this.passphrase.value);
         }
     }
 }
