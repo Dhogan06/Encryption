@@ -54,80 +54,86 @@ class DauigiEncryption {
     #algorithms = []
 
     #createForm() {
+        // Create elements
         let pattern = document.createElement('textarea');
-        pattern.style.marginBottom = "10px";
-        pattern.placeholder = "Pattern";
         let passphrase = document.createElement('input');
-        passphrase.style.marginBottom = "10px";
-        passphrase.placeholder = "Passphrase";
         let key = document.createElement('input');
-        key.style.marginBottom = "10px";
-        key.placeholder = "Key";
         let shift = document.createElement('input');
-        shift.style.marginBottom = "10px";
-        shift.placeholder = "Shift";
         let algorithm = document.createElement('input');
-        algorithm.style.marginBottom = "10px";
-        algorithm.placeholder = "Algorithm";
         let text = document.createElement('textarea');
-        text.style.marginBottom = "10px";
-        text.placeholder = "Text to be Encrypted or Decrypted";
-        text.cols = "45";
-        text.rows = "15";
         let encryptBtn = document.createElement('button');
-        encryptBtn.style.marginBottom = "10px";
-        encryptBtn.innerHTML = "Encrypt";
         let decryptBtn = document.createElement('button');
-        decryptBtn.style.marginBottom = "10px";
-        decryptBtn.innerHTML = "Decrypt";
         let genKeyBtn = document.createElement('button');
-        genKeyBtn.style.marginBottom = "10px";
+
+        // Set placeholders and innerHTML
+        pattern.placeholder = "Pattern";
+        passphrase.placeholder = "Passphrase";
+        key.placeholder = "Key";
+        shift.placeholder = "Shift";
+        algorithm.placeholder = "Algorithm";
+        text.placeholder = "Text to be Encrypted or Decrypted";
+        encryptBtn.innerHTML = "Encrypt";
+        decryptBtn.innerHTML = "Decrypt";
         genKeyBtn.innerHTML = "Generate Key";
 
+        // Set attributes
+        text.cols = "45";
+        text.rows = "15";
         shift.type = "number";
         algorithm.type = "number";
-
         shift.min = "0";
         shift.max = "26";
         algorithm.min = "1";
         algorithm.max = this.#algorithms.length;
 
-        key.onchange = () => {
-            pattern.value = key.value + '-' + shift.value + '-' + algorithm.value;
-        }
-        shift.onchange = () => {
-            pattern.value = key.value + '-' + shift.value + '-' + algorithm.value;
-        }
-        algorithm.onchange = () => {
-            pattern.value = key.value + '-' + shift.value + '-' + algorithm.value;
+        // Set onchange functions
+        key.onchange = () => updatePattern();
+        shift.onchange = () => updatePattern();
+        algorithm.onchange = () => updatePattern();
+        pattern.onchange = () => updateFields();
+
+        // Functions for updating pattern and fields
+        function updatePattern() {
+            pattern.value = `${key.value}-${shift.value}-${algorithm.value}`;
         }
 
-        pattern.onchange = () => {
+        function updateFields() {
             let patternArray = pattern.value.split('-');
             key.value = patternArray[0];
             shift.value = patternArray[1];
             algorithm.value = patternArray[2];
         }
-        encryptBtn.onclick = () => {
+
+        // Set onclick functions for encryption, decryption, and key generation
+        encryptBtn.onclick = () => encrypt();
+        decryptBtn.onclick = () => decrypt();
+        genKeyBtn.onclick = () => generateKey();
+
+        // Functions for encryption, decryption, and key generation
+        function encrypt() {
             if (key.value !== '' && shift.value !== '' && algorithm.value !== '') {
                 text.value = this.#algorithms[parseInt(algorithm.value) - 1].encrypt(text.value, key.value, shift.value, passphrase.value);
             }
-        };
-        decryptBtn.onclick = () => {
+        }
+
+        function decrypt() {
             if (key.value !== '' && shift.value !== '' && algorithm.value !== '') {
                 text.value = this.#algorithms[parseInt(algorithm.value) - 1].decrypt(text.value, key.value, shift.value, passphrase.value);
             }
-        };
-        genKeyBtn.onclick = () => {
-            key.value = this.generateKey(passphrase.value);
-            pattern.value = key.value + '-' + shift.value + '-' + algorithm.value;
-        };
+        }
 
+        function generateKey() {
+            key.value = this.generateKey(passphrase.value);
+            updatePattern();
+        }
+
+        // Create details element for advanced pattern
         let detail = document.createElement('details');
         let summary = document.createElement('summary');
         summary.innerHTML = "Pattern (Advanced)";
         detail.appendChild(summary);
 
+        // Append elements to details
         detail.appendChild(key);
         detail.appendChild(document.createElement('br'));
         detail.appendChild(shift);
@@ -136,10 +142,14 @@ class DauigiEncryption {
         detail.appendChild(document.createElement('br'));
         detail.appendChild(genKeyBtn);
 
+        // Create lock button
         let lock = document.createElement('button');
         lock.innerHTML = "Lock Pattern";
-        lock.onclick = () => {
-            pattern.disabled = !passphrase.disabled;
+        lock.onclick = () => togglePatternLock();
+
+        // Function for toggling pattern lock
+        function togglePatternLock() {
+            pattern.disabled = !pattern.disabled;
             passphrase.disabled = !passphrase.disabled;
             key.disabled = !key.disabled;
             shift.disabled = !shift.disabled;
@@ -147,12 +157,7 @@ class DauigiEncryption {
             genKeyBtn.disabled = !genKeyBtn.disabled;
         }
 
-        let container = document.createElement('div');
-        container.style.display = "flex";
-        container.style.justifyContent = "space-between";
-        container.appendChild(encryptBtn);
-        container.appendChild(decryptBtn);
-
+        // Append elements to document body
         document.body.appendChild(pattern);
         document.body.appendChild(document.createElement('br'));
         document.body.appendChild(passphrase);
@@ -162,7 +167,9 @@ class DauigiEncryption {
         document.body.appendChild(document.createElement('br'));
         document.body.appendChild(text);
         document.body.appendChild(document.createElement('br'));
-        document.body.appendChild(container);
+        document.body.appendChild(encryptBtn);
+        document.body.appendChild(document.createElement('br'));
+        document.body.appendChild(decryptBtn);
 
     }
 
