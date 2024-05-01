@@ -205,6 +205,8 @@ class DauigiEncryption {
 
     #Form = class {
 
+        #encryption;
+
         constructor(encryption) {
             this.passphrase = document.createElement('input');
             this.key = document.createElement('input');
