@@ -48,6 +48,7 @@ class DauigiEncryption {
             }
         );
 
+        let pattern = document.createElement('textarea');
         let passphrase = document.createElement('input');
         let key = document.createElement('input');
         let shift = document.createElement('input');
@@ -57,6 +58,7 @@ class DauigiEncryption {
         let decryptBtn = document.createElement('button');
         let genKeyBtn = document.createElement('button');
 
+        pattern.placeholder = "Pattern";
         passphrase.placeholder = "Passphrase";
         key.placeholder = "Key";
         shift.placeholder = "Shift";
@@ -77,6 +79,22 @@ class DauigiEncryption {
         algorithm.min = "1";
         algorithm.max = this.#algorithms.length;
 
+        key.onchange = () => {
+            pattern.value = key.value + '-' + shift.value + '-' + algorithm.value;
+        }
+        shift.onchange = () => {
+            pattern.value = key.value + '-' + shift.value + '-' + algorithm.value;
+        }
+        algorithm.onchange = () => {
+            pattern.value = key.value + '-' + shift.value + '-' + algorithm.value;
+        }
+
+        pattern.onchange = () => {
+            let patternArray = pattern.value.split('-');
+            key.value = patternArray[0];
+            shift.value = patternArray[1];
+            algorithm.value = patternArray[2];
+        }
         encryptBtn.onclick = () => {
             if (key != '' && shift != '' && algorithm != '') {
                 text.value = this.#algorithms[parseInt(algorithm.value) - 1].encrypt(text.value, key.value, shift.value, passphrase.value);
