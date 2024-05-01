@@ -66,6 +66,9 @@ class DauigiEncryption {
         decryptBtn.innerHTML = "Decrypt";
         genKeyBtn.innerHTML = "Generate Key";
 
+        text.cols = "45";
+        text.rows = "15";
+
         shift.type = "number";
         algorithm.type = "number";
 
@@ -75,10 +78,14 @@ class DauigiEncryption {
         algorithm.max = this.#algorithms.length;
 
         encryptBtn.onclick = () => {
-            text.value = this.#algorithms[parseInt(algorithm.value) - 1].encrypt(text.value, key.value, shift.value, passphrase.value);
+            if (key != '' && shift != '' && algorithm != '') {
+                text.value = this.#algorithms[parseInt(algorithm.value) - 1].encrypt(text.value, key.value, shift.value, passphrase.value);
+            }
         };
         decryptBtn.onclick = () => {
-            text.value = this.#algorithms[parseInt(algorithm.value) - 1].decrypt(text.value, key.value, shift.value, passphrase.value);
+            if (key != '' && shift != '' && algorithm != '') {
+                text.value = this.#algorithms[parseInt(algorithm.value) - 1].decrypt(text.value, key.value, shift.value, passphrase.value);
+            }
         };
         genKeyBtn.onclick = () => {
             key.value = this.generateKey(passphrase.value);
