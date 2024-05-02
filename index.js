@@ -1,4 +1,4 @@
-import DauigiEncryption from "./encryption/encryption";
+import DauigiEncryption from "./encryption/encryption.js";
 
 var encrypter = new DauigiEncryption();
 encrypter.createForm();
