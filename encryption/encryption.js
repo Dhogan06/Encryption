@@ -47,13 +47,11 @@ class DauigiEncryption {
                 return text;
             }
         );
-
-        this.#createForm();
     }
 
     #algorithms = []
 
-    #createForm() {
+    createForm() {
         // Create elements
         let pattern = document.createElement('textarea');
         let passphrase = document.createElement('input');
@@ -323,4 +321,4 @@ class DauigiEncryption {
     }
 }
 
-let encrypter = new DauigiEncryption();
+export default DauigiEncryption
